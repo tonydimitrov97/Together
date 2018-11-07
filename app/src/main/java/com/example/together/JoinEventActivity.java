@@ -3,12 +3,12 @@ package com.example.together;
 import android.os.Bundle;
 import android.app.Activity;
 
-public class app_settings extends Activity {
+public class JoinEventActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_settings);
+        setContentView(R.layout.activity_join_event);
     }
 
 }

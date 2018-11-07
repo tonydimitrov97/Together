@@ -33,23 +33,20 @@
             android:label="@string/title_activity_event_info"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".event_settings"
+            android:name=".EventSettingsActivity"
             android:label="@string/title_activity_event_settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".app_settings"
+            android:name=".AppSettingsActivity"
             android:label="@string/title_activity_app_settings" />
         <activity
-            android:name=".add_event"
-            android:label="@string/title_activity_add_event" />
-        <activity
-            android:name=".photo_screen"
+            android:name=".PhotoScreenActivity"
             android:label="@string/title_activity_photo_screen" />
         <activity
-            android:name=".join_event"
+            android:name=".JoinEventActivity"
             android:label="@string/title_activity_join_event" />
         <activity
-            android:name=".create_event"
+            android:name=".CreateEventActivity"
             android:label="@string/title_activity_create_event"></activity>
     </application>
 
