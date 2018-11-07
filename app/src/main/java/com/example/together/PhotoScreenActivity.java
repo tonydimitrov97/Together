@@ -3,7 +3,7 @@ package com.example.together;
 import android.os.Bundle;
 import android.app.Activity;
 
-public class photo_screen extends Activity {
+public class PhotoScreenActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
