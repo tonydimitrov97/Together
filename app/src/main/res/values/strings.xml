@@ -177,4 +177,10 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_event_settings">event_settings</string>
+    <string name="title_activity_app_settings">app_settings</string>
+    <string name="title_activity_add_event">add_event</string>
+    <string name="title_activity_photo_screen">photo_screen</string>
+    <string name="title_activity_join_event">join_event</string>
+    <string name="title_activity_create_event">create_event</string>
 </resources>
