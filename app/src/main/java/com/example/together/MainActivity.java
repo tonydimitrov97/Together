@@ -1,95 +1,210 @@
 package com.example.together;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.SurfaceTexture;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CaptureRequest;
+import android.hardware.camera2.params.StreamConfigurationMap;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.util.Size;
+import android.view.Surface;
+import android.view.TextureView;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView mImageView = null;    // for holding thumbnail
-    String mCurrentPhotoPath;   // for holding current image path
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int CAMERA_REQUEST_CODE = 100;
+    CameraManager cameraManager = null;
+    int cameraFacing;
+    TextureView.SurfaceTextureListener surfaceTextureListener = null;
+    String cameraId;
+    Size previewSize;
+    CameraDevice.StateCallback stateCallback = null;
+    Handler backgroundHandler = null;
+    HandlerThread backgroundThread = null;
+    CameraDevice cameraDevice = null;
+    //TextureView screenView = findViewById(R.id.screenView);
+    TextureView screenView;
+    CameraCaptureSession cameraCaptureSession = null;
+    CaptureRequest captureRequest = null;
+    CaptureRequest.Builder captureRequestBuilder = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+
+
+        cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        cameraFacing = CameraCharacteristics.LENS_FACING_BACK;
+
+        surfaceTextureListener = new TextureView.SurfaceTextureListener() {
+            @Override
+            public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
+                setUpCamera();
+                openCamera();
+            }
+
+            @Override
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int width, int height) {
+
+            }
+
+            @Override
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+                return false;
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+
+            }
+        };
+
+        stateCallback = new CameraDevice.StateCallback() {
+            @Override
+            public void onOpened(CameraDevice cameraDevice) {
+                MainActivity.this.cameraDevice = cameraDevice;
+                createPreviewSession();
+
+            }
+
+            @Override
+            public void onDisconnected(CameraDevice cameraDevice) {
+                cameraDevice.close();
+                MainActivity.this.cameraDevice = null;
+            }
+
+            @Override
+            public void onError(CameraDevice cameraDevice, int error) {
+                cameraDevice.close();
+                MainActivity.this.cameraDevice = null;
+            }
+        };
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    private void setUpCamera() {
+        try {
+            for (String cameraId : cameraManager.getCameraIdList()) {
+                CameraCharacteristics cameraCharacteristics =
+                        cameraManager.getCameraCharacteristics(cameraId);
+                if (cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) ==
+                        cameraFacing) {
+                    StreamConfigurationMap streamConfigurationMap = cameraCharacteristics.get(
+                            CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                    previewSize = streamConfigurationMap.getOutputSizes(SurfaceTexture.class)[0];
+                    this.cameraId = cameraId;
+                }
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
         }
     }
 
-    // Getting thumbnail picture
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            mImageView.setImageBitmap(imageBitmap);
-//        }
-//    }
-
-    // Creates full-size image
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
+    private void openCamera() {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                cameraManager.openCamera(cameraId, stateCallback, backgroundHandler);
+                screenView = findViewById(R.id.screenView);
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
+    private void openBackgroundThread() {
+        backgroundThread = new HandlerThread("camera_background_thread");
+        backgroundThread.start();
+        backgroundHandler = new Handler(backgroundThread.getLooper());
     }
 
-    private void setPic() {
-        // Get the dimensions of the View
-        int targetW = mImageView.getWidth();
-        int targetH = mImageView.getHeight();
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        openBackgroundThread();
+        if (screenView.isAvailable()) {
+            setUpCamera();
+            openCamera();
+        } else {
+            screenView.setSurfaceTextureListener(surfaceTextureListener);
+        }
+    }*/
 
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
+    @Override
+    protected void onStop() {
+        super.onStop();
+        closeCamera();
+        closeBackgroundThread();
+    }
 
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+    private void closeCamera() {
+        if (cameraCaptureSession != null) {
+            cameraCaptureSession.close();
+            cameraCaptureSession = null;
+        }
 
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
+        if (cameraDevice != null) {
+            cameraDevice.close();
+            cameraDevice = null;
+        }
+    }
 
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mImageView.setImageBitmap(bitmap);
+    private void closeBackgroundThread() {
+        if (backgroundHandler != null) {
+            backgroundThread.quitSafely();
+            backgroundThread = null;
+            backgroundHandler = null;
+        }
+    }
+
+    private void createPreviewSession() {
+        try {
+            SurfaceTexture surfaceTexture = screenView.getSurfaceTexture();
+            surfaceTexture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
+            Surface previewSurface = new Surface(surfaceTexture);
+            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            captureRequestBuilder.addTarget(previewSurface);
+
+            cameraDevice.createCaptureSession(Collections.singletonList(previewSurface),
+                    new CameraCaptureSession.StateCallback() {
+
+                        @Override
+                        public void onConfigured(CameraCaptureSession cameraCaptureSession) {
+                            if (cameraDevice == null) {
+                                return;
+                            }
+
+                            try {
+                                captureRequest = captureRequestBuilder.build();
+                                MainActivity.this.cameraCaptureSession = cameraCaptureSession;
+                                MainActivity.this.cameraCaptureSession.setRepeatingRequest(captureRequest,
+                                        null, backgroundHandler);
+                            } catch (CameraAccessException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onConfigureFailed(CameraCaptureSession cameraCaptureSession) {
+
+                        }
+                    }, backgroundHandler);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
