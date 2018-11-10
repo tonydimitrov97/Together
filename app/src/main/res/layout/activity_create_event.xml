@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/eventTitleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="97dp"
+        android:layout_height="24dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -21,7 +21,7 @@
 
     <EditText
         android:id="@+id/eventTitleInput"
-        android:layout_width="wrap_content"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -82,7 +82,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:gravity="right"
+        android:textAlignment="gravity"
         android:text="Location:"
+        android:textAllCaps="false"
         android:textColor="@color/defaultTextColor"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/locationInput"
@@ -90,7 +93,7 @@
 
     <EditText
         android:id="@+id/locationInput"
-        android:layout_width="wrap_content"
+        android:layout_width="208dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -105,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/endDateInput" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/privacyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -120,11 +123,9 @@
         android:id="@+id/privacySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="60dp"
-        android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
         android:text="Public"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="@+id/locationInput"
         app:layout_constraintTop_toBottomOf="@+id/locationInput" />
 
     <Button
