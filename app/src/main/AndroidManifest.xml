@@ -18,14 +18,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".SplashActivity" android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
-
         </activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,12 +48,7 @@
         </activity>
         <activity
             android:name=".EventInfoActivity"
-            android:label="@string/title_activity_event_info"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EventSettingsActivity"
-            android:label="@string/title_activity_event_settings"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_event_info" />
         <activity
             android:name=".AppSettingsActivity"
             android:label="@string/title_activity_app_settings" />
@@ -65,6 +61,14 @@
         <activity
             android:name=".CreateEventActivity"
             android:label="@string/title_activity_create_event" />
+        <activity
+            android:name=".EventSettingsActivity"
+            android:label="@string/title_activity_event_settings">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -12,18 +12,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mCameraView = findViewById(R.id.camera);
+       // mCameraView = findViewById(R.id.camera);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mCameraView.start();
+        //mCameraView.start();
     }
 
     @Override
     protected void onPause() {
-        mCameraView.stop();
+       // mCameraView.stop();
         super.onPause();
     }
 }
