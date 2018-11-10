@@ -41,6 +41,7 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/caches
+.idea/modules.xml
 app/app.iml
 
 # Keystore files
