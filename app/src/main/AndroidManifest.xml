@@ -34,9 +34,6 @@
             android:name=".EventListActivity"
             android:label="@string/title_activity_event_list"/>
         <activity
-            android:name=".EventInfoActivity"
-            android:label="@string/title_activity_event_info" />
-        <activity
             android:name=".AppSettingsActivity"
             android:label="@string/title_activity_app_settings" />
         <activity
@@ -56,6 +53,14 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_signup">
+        </activity>
+        <activity
+            android:name=".EventInfoActivity"
+            android:label="@string/title_activity_event_info">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
