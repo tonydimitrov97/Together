@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 
 import com.example.together.data.EventPreview;
 import com.example.together.data.EventPreviewAdapter;
@@ -72,4 +73,13 @@ public class EventListActivity extends AppCompatActivity {
         // Setting the adapter to RecyclerView
         mRecyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return true;
+    }
+
 }

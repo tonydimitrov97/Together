@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 
 import com.example.together.EventInfo.EventGallery;
 import com.example.together.EventInfo.EventImage;
@@ -34,5 +35,13 @@ public class EventInfoActivity extends AppCompatActivity {
         ArrayList<EventImage> imageList = eventGallery.getPhotoList();
         GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), imageList, width, height);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return true;
     }
 }
