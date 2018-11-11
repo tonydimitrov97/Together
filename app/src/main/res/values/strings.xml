@@ -184,4 +184,7 @@
     <string name="title_activity_join_event">join_event</string>
     <string name="title_activity_create_event">create_event</string>
     <string name="title_activity_signup">Sign Up</string>
+    <string name="photo_screen_like">likes</string>
+    <string name="photo_screen_comment">comments</string>
+    <string name="photo_screen_privacy">privacy</string>
 </resources>
