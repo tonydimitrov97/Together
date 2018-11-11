@@ -1,15 +1,22 @@
 package com.example.together.EventInfo;
 
+import java.util.Random;
+
 public class EventImage {
 
     private Integer imageId;
-    private String creator;
+    private String owner;
     private String caption;
     private boolean isPublic;
     private int numLikes;
 
     public EventImage(Integer imageId) {
+
+        Random random = new Random();
         this.imageId = imageId;
+        this.numLikes = random.nextInt(50);
+        this.isPublic = true;
+
     }
 
     public Integer getImageId() {
@@ -20,8 +27,8 @@ public class EventImage {
         this.imageId = android_image_url;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setCreator(String owner) {
+        this.owner = owner;
     }
 
     public void setCaption(String caption) {
@@ -29,6 +36,6 @@ public class EventImage {
     }
 
     public void setPublic(boolean isPublic) {
-
+        this.isPublic = isPublic;
     }
 }

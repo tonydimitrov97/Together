@@ -29,10 +29,10 @@ public class EventInfoActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), Math.round(width / 300));
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 4);
         recyclerView.setLayoutManager(layoutManager);
         ArrayList<EventImage> imageList = eventGallery.getPhotoList();
-        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), imageList);
+        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), imageList, width, height);
         recyclerView.setAdapter(adapter);
     }
 }

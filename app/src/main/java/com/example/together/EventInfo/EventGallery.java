@@ -16,7 +16,7 @@ public class EventGallery {
 
 
     public void initializeGallery() {
-        int count = 5000;
+        int count = 500;
         int imageId = 0;
 
         for(int i = 0; i < count; i++) {
