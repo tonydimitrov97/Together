@@ -11,14 +11,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/addEventMenu"
+        app:layout_constraintBottom_toTopOf="@+id/eventListMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/addEventMenu"
+        android:id="@+id/eventListMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -30,4 +30,5 @@
         app:itemIconTint="#FFFFFF"
         app:itemTextColor="#FFFFFF"
         app:menu="@menu/menu_event_list"/>
+
 </android.support.constraint.ConstraintLayout>

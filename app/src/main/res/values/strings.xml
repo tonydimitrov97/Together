@@ -13,7 +13,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_event_list">Event List</string>
+    <string name="title_activity_event_list">My Events</string>
 
     <!-- Strings related to Settings -->
 
@@ -187,4 +187,6 @@
     <string name="photo_screen_like">likes</string>
     <string name="photo_screen_comment">comments</string>
     <string name="photo_screen_privacy">privacy</string>
+    <string name="event_list_create_event">create event</string>
+    <string name="event_list_join_event">join event</string>
 </resources>
