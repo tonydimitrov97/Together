@@ -41,7 +41,8 @@
             android:label="@string/title_activity_app_settings" />
         <activity
             android:name=".PhotoScreenActivity"
-            android:label="@string/title_activity_photo_screen" />
+            android:label="@string/title_activity_photo_screen" >
+        </activity>
         <activity
             android:name=".JoinEventActivity"
             android:label="Join Event" />
