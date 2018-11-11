@@ -1,5 +1,7 @@
 package com.example.together.EventInfo;
 
+import com.example.together.R;
+
 import java.util.ArrayList;
 
 public class EventGallery {
@@ -14,13 +16,17 @@ public class EventGallery {
 
 
     public void initializeGallery() {
-        int count = 6;
+        int count = 5000;
         int imageId = 0;
-        
+
         for(int i = 0; i < count; i++) {
-            myGallery.add(new EventImage(imageId));
+            myGallery.add(new EventImage(R.drawable.imageex1));
         }
 
+    }
+
+    public ArrayList<EventImage> getPhotoList() {
+        return myGallery;
     }
 
 
