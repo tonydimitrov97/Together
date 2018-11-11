@@ -37,7 +37,7 @@ public class EventListActivity extends AppCompatActivity {
                 new EventPreview(
                     "123456",
                         "Colorado Trip",
-                        "Having fun times in CO + smoking lots of grass",
+                        "Having fun times in CO +",
                         R.drawable.test
                 )
         );
@@ -45,7 +45,7 @@ public class EventListActivity extends AppCompatActivity {
                 new EventPreview(
                         "123456",
                         "Minnesota Trip",
-                        "Having fun times in MN + smoking lots of grass",
+                        "Having fun times in MN +",
                         R.drawable.test
                 )
         );
@@ -53,7 +53,7 @@ public class EventListActivity extends AppCompatActivity {
                 new EventPreview(
                         "123456",
                         "California Trip",
-                        "Having fun times in CA + smoking lots of grass",
+                        "Having fun times in CA +",
                         R.drawable.test
                 )
         );
@@ -61,7 +61,7 @@ public class EventListActivity extends AppCompatActivity {
                 new EventPreview(
                         "123456",
                         "Washington Trip",
-                        "Having fun times in WA + smoking lots of grass",
+                        "Having fun times in WA +",
                         R.drawable.test
                 )
         );
