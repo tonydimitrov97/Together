@@ -1,4 +1,11 @@
-package com.example.together.EventInfo;
+package com.example.together.event;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.together.R;
 
 import java.util.Random;
 
@@ -11,11 +18,11 @@ public class EventImage {
     private int numLikes;
 
     public EventImage(Integer imageId) {
-
         Random random = new Random();
         this.imageId = imageId;
         this.numLikes = random.nextInt(50);
         this.isPublic = true;
+        this.caption = "Hey, this is a caption.";
 
     }
 
@@ -38,4 +45,5 @@ public class EventImage {
     public void setPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
+
 }

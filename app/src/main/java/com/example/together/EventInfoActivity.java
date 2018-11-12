@@ -6,9 +6,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 
-import com.example.together.EventInfo.EventGallery;
-import com.example.together.EventInfo.EventImage;
-import com.example.together.EventInfo.GalleryAdapter;
+import com.example.together.event.EventGallery;
+import com.example.together.event.EventImage;
+import com.example.together.event.GalleryAdapter;
 import java.util.ArrayList;
 
 public class EventInfoActivity extends AppCompatActivity {

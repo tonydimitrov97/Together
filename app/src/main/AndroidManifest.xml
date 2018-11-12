@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -32,7 +33,12 @@
         </activity>
         <activity
             android:name=".EventListActivity"
-            android:label="@string/title_activity_event_list"/>
+            android:label="@string/title_activity_event_list">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".AppSettingsActivity"
             android:label="@string/title_activity_app_settings" />
