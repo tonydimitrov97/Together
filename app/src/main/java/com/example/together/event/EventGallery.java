@@ -16,9 +16,9 @@ public class EventGallery {
         myGallery = new ArrayList<EventImage>();
         random = new Random();
         images = new Integer[3];
-        images[0] = R.drawable.image1;
-        images[1] = R.drawable.image2;
-        images[2] = R.drawable.image3;
+        images[0] = R.mipmap.image1;
+        images[1] = R.mipmap.image2;
+        images[2] = R.mipmap.image3;
        /* images[3] = R.drawable.image4;
         images[4] = R.drawable.image5;
         images[5] = R.drawable.image6;

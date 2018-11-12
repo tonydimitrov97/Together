@@ -29,10 +29,14 @@ public class PhotoScreenActivity extends Activity {
         System.out.println(json);
 
         TextView captionView = findViewById(R.id.photoCaptionLabel);
+        TextView likeLabel = findViewById(R.id.likeLabel);
         ImageView photoView = findViewById(R.id.picture);
+
+        String likesText = ""+numLikes;
 
         captionView.setText(caption);
         photoView.setImageResource(photoId);
+        likeLabel.setText(likesText);
 
 
 
