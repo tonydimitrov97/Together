@@ -9,7 +9,16 @@ import android.util.DisplayMetrics;
 import com.example.together.event.EventGallery;
 import com.example.together.event.EventImage;
 import com.example.together.event.GalleryAdapter;
+import com.example.together.network.Environment;
+import com.example.together.network.EventEndpoint;
+import com.example.together.network.model.EventModel;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventInfoActivity extends AppCompatActivity {
 
@@ -17,6 +26,28 @@ public class EventInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
+
+        Environment env = new Environment();
+
+        Call<EventModel> call = env.getEvents().getEvent(1);
+
+
+
+        call.enqueue(new Callback<EventModel>() {
+
+            @Override
+            public void onResponse(Call<EventModel> call, Response<EventModel> response) {
+                EventModel myEvent = response.body();
+                System.out.println("RESPONSE: " + myEvent.getId());
+            }
+
+            @Override
+            public void onFailure(Call<EventModel> call, Throwable t) {
+                System.out.println("Error accessing api: " + t.getMessage());
+            }
+        });
+
+
 
         EventGallery eventGallery = new EventGallery();
         eventGallery.initializeGallery();

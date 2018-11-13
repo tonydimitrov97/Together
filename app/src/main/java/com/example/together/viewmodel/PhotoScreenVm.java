@@ -16,7 +16,7 @@ public class PhotoScreenVm extends ViewModel {
         JsonObject jobject = jelement.getAsJsonObject();
         this.photoId = jobject.get("imageId").getAsInt();
         this.numLikes = jobject.get("numLikes").getAsInt();
-        this.caption = jobject.get("caption").toString();
+       // this.caption = jobject.get("caption").toString();
     }
 
    public int getLikes() {
