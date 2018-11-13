@@ -11,7 +11,6 @@ public class EventGallery {
     Random random;
     Integer[] images;
 
-
     public EventGallery() {
         myGallery = new ArrayList<EventImage>();
         random = new Random();
@@ -41,7 +40,5 @@ public class EventGallery {
     public ArrayList<EventImage> getPhotoList() {
         return myGallery;
     }
-
-
 
 }

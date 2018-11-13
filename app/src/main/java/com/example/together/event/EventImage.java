@@ -1,6 +1,5 @@
 package com.example.together.event;
 
-import com.example.together.R;
 import java.util.Random;
 
 public class EventImage {
