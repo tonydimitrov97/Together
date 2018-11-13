@@ -1,41 +1,88 @@
 package com.example.together.event;
 
-import java.util.Random;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class EventImage {
 
-    private Integer imageId;
-    private String owner;
-    private String caption;
-    private boolean isPublic;
-    private int numLikes;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("eventId")
+    @Expose
+    private Integer eventId;
+    @SerializedName("userId")
+    @Expose
+    private Integer userId;
+    @SerializedName("path")
+    @Expose
+    private String path;
+    @SerializedName("likes")
+    @Expose
+    private Integer likes;
 
-    public EventImage(Integer imageId) {
-        Random random = new Random();
-        this.imageId = imageId;
-        this.numLikes = random.nextInt(50);
-        this.isPublic = true;
-
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public EventImage() {
     }
 
-    public Integer getImageId() {
-        return imageId;
+    /**
+     *
+     * @param id
+     * @param eventId
+     * @param likes
+     * @param userId
+     * @param path
+     */
+    public EventImage(Integer id, Integer eventId, Integer userId, String path, Integer likes) {
+        super();
+        this.id = id;
+        this.eventId = eventId;
+        this.userId = userId;
+        this.path = path;
+        this.likes = likes;
     }
 
-    public void setImageId(Integer android_image_url) {
-        this.imageId = android_image_url;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCreator(String owner) {
-        this.owner = owner;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setCaption(String caption) {
-        this.caption = caption;
+    public Integer getEventId() {
+        return eventId;
     }
 
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.together;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,10 +11,8 @@ import com.example.together.event.EventGallery;
 import com.example.together.event.EventImage;
 import com.example.together.event.GalleryAdapter;
 import com.example.together.network.Environment;
-import com.example.together.network.EventEndpoint;
-import com.example.together.network.model.EventModel;
+import com.example.together.network.response.EventResponse;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -29,28 +28,31 @@ public class EventInfoActivity extends AppCompatActivity {
 
         Environment env = new Environment();
 
-        Call<EventModel> call = env.getEvents().getEvent(1);
+        Call<EventResponse> call = env.getEventService().getEventById(1);
 
 
-
-        call.enqueue(new Callback<EventModel>() {
+        /* Create custom callback for each response */
+        call.enqueue(new Callback<EventResponse>() {
 
             @Override
-            public void onResponse(Call<EventModel> call, Response<EventModel> response) {
-                EventModel myEvent = response.body();
-                System.out.println("RESPONSE: " + myEvent.getId());
+            public void onResponse(@NonNull Call<EventResponse> call, @NonNull Response<EventResponse> response) {
+                EventResponse eventResponse = response.body();
+                if (eventResponse != null) {
+                    System.out.println("RESPONSE: " + eventResponse.getResponse().get(0).getDescription());
+                } else {
+                    System.out.println("Response received but encountered an error in parsing.");
+                }
             }
 
             @Override
-            public void onFailure(Call<EventModel> call, Throwable t) {
-                System.out.println("Error accessing api: " + t.getMessage());
+            public void onFailure(Call<EventResponse> call, Throwable t) {
+                System.out.println("Error accessing Together API: " + t.getMessage());
             }
         });
 
 
 
-        EventGallery eventGallery = new EventGallery();
-        eventGallery.initializeGallery();
+        EventGallery eventGallery = new EventGallery(1);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.eventGallery);
         recyclerView.setHasFixedSize(true);
@@ -61,8 +63,8 @@ public class EventInfoActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 4);
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<EventImage> imageList = eventGallery.getPhotoList();
-        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), imageList, width);
+        ArrayList<EventImage> imageGallery = eventGallery.getPhotoList();
+        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), imageGallery, width);
         recyclerView.setAdapter(adapter);
     }
 }
