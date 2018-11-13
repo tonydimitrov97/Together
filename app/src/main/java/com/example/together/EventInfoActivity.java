@@ -26,13 +26,12 @@ public class EventInfoActivity extends AppCompatActivity {
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 4);
         recyclerView.setLayoutManager(layoutManager);
         ArrayList<EventImage> imageList = eventGallery.getPhotoList();
-        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), imageList, width, height);
+        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), imageList, width);
         recyclerView.setAdapter(adapter);
     }
 }

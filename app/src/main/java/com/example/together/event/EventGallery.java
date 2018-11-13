@@ -27,8 +27,6 @@ public class EventGallery {
         images[8] = R.drawable.image9;
         images[9] = R.drawable.image10;
         images[10] = R.drawable.image11;*/
-
-
     }
 
     public void initializeGallery() {

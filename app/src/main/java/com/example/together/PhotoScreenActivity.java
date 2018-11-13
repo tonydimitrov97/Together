@@ -1,44 +1,27 @@
 package com.example.together;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import com.example.together.databinding.ActivityPhotoScreenBinding;
 import android.os.Bundle;
-import android.app.Activity;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import android.support.v7.app.AppCompatActivity;
+import com.example.together.viewmodel.PhotoScreenVm;
 
-public class PhotoScreenActivity extends Activity {
+public class PhotoScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_screen);
+        //setContentView(R.layout.activity_photo_screen);
 
         Intent intent = getIntent();
         String json = intent.getStringExtra("imageObject");
 
-        JsonElement jelement = new JsonParser().parse(json);
-        JsonObject jobject = jelement.getAsJsonObject();
+        PhotoScreenVm photoScreenVm = new PhotoScreenVm(json); //ViewModelProviders.of(this).get(PhotoScreenVm.class);
 
-        int numLikes = Integer.parseInt(jobject.get("numLikes").toString());
-        String caption = jobject.get("caption").toString();
-        Integer photoId = Integer.parseInt(jobject.get("imageId").toString());
+        ActivityPhotoScreenBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_photo_screen);
 
-        System.out.println(json);
-
-        TextView captionView = findViewById(R.id.photoCaptionLabel);
-        TextView likeLabel = findViewById(R.id.likeLabel);
-        ImageView photoView = findViewById(R.id.picture);
-
-        String likesText = ""+numLikes;
-
-        captionView.setText(caption);
-        photoView.setImageResource(photoId);
-        likeLabel.setText(likesText);
-
-
+        binding.setPsvm(photoScreenVm);
 
     }
 

@@ -21,14 +21,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     private ArrayList<EventImage> galleryList;
     private Context context;
     private int width;
-    private int height;
     
 
-    public GalleryAdapter(Context context, ArrayList<EventImage> galleryList, int width, int height) {
+    public GalleryAdapter(Context context, ArrayList<EventImage> galleryList, int width) {
         this.galleryList = galleryList;
         this.context = context;
         this.width = width;
-        this.height = height;
     }
 
     @Override
