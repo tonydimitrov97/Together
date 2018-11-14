@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
+import com.example.together.event.Event;
 import com.example.together.event.EventGallery;
 import com.example.together.event.EventImage;
 import com.example.together.event.GalleryAdapter;
-import com.example.together.network.Environment;
+import com.example.together.network.RequestHandler;
 import com.example.together.network.response.EventResponse;
 
 import java.util.ArrayList;
@@ -26,31 +28,21 @@ public class EventInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
 
-        Environment env = new Environment();
+        RequestHandler requestHandler = new RequestHandler();
 
-        Call<EventResponse> call = env.getEventService().getEventById(1);
+        Call<EventResponse> call = requestHandler.getEventService().getEventById(1);
 
-
-        /* Create custom callback for each response */
         call.enqueue(new Callback<EventResponse>() {
-
             @Override
             public void onResponse(@NonNull Call<EventResponse> call, @NonNull Response<EventResponse> response) {
-                EventResponse eventResponse = response.body();
-                if (eventResponse != null) {
-                    System.out.println("RESPONSE: " + eventResponse.getResponse().get(0).getDescription());
-                } else {
-                    System.out.println("Response received but encountered an error in parsing.");
-                }
+
             }
 
             @Override
             public void onFailure(Call<EventResponse> call, Throwable t) {
-                System.out.println("Error accessing Together API: " + t.getMessage());
+                System.out.println("Error calling event API.");
             }
         });
-
-
 
         EventGallery eventGallery = new EventGallery(1);
 

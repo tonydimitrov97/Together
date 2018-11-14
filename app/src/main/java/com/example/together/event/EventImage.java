@@ -37,12 +37,16 @@ public class EventImage {
      * @param path
      */
     public EventImage(Integer id, Integer eventId, Integer userId, String path, Integer likes) {
-        super();
         this.id = id;
         this.eventId = eventId;
         this.userId = userId;
         this.path = path;
         this.likes = likes;
+    }
+
+    public EventImage(Integer id) {
+        this.id = id;
+        this.path = "http://charliesplittstoser.webutu.com/images/image1.jpg";
     }
 
     public Integer getId() {

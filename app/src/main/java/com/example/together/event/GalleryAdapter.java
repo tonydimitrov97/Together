@@ -38,7 +38,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //viewHolder.img.setImageResource((galleryList.get(i).getImageId()));
+        viewHolder.img.setImageResource((galleryList.get(i).getId()));
         viewHolder.img.setOnClickListener(new CustomOnClickListener(i) {
             public void onClick(View v) {
                 int index = this.getIndex();
