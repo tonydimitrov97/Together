@@ -1,11 +1,13 @@
 package com.example.together.data;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.together.R;
 
@@ -30,6 +32,8 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.layout_preview, null);
+        //new RelativeLayout.LayoutParams(dimension, dimension)
+        view.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         return new EventPreviewHolder(view);
     }
 
@@ -42,6 +46,7 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
         holder.textViewTitle.setText(preview.getEventName());
         holder.textViewShortDesc.setText(preview.getShortDesc());
         holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(preview.getImage()));
+
 
     }
 
