@@ -5,7 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-    public interface EventImageEndpoint {
+    public interface EventImageService {
 
         @GET("api/photo")
         Call<EventImageResponse> getPhotos();

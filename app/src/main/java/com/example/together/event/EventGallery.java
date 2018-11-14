@@ -3,7 +3,6 @@ package com.example.together.event;
 import android.support.annotation.NonNull;
 
 import com.example.together.R;
-import com.example.together.network.RequestHandler;
 import com.example.together.network.response.EventImageResponse;
 import java.util.ArrayList;
 import java.util.Random;

@@ -1,18 +1,22 @@
 package com.example.together.network.endpoint;
 
-import com.example.together.network.response.UserResponse;
+import com.example.together.event.Event;
+import com.example.together.network.response.EventResponse;
 
+import java.util.List;
+
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface UserEndpoint {
+public interface EventService {
 
-    @GET("api/user")
-    Call<UserResponse> getUsers();
+    @GET("api/event")
+    Single<EventResponse> getEvents();
 
-    @GET("api/user/{id}")
-    Call<UserResponse> getUserById(@Path("id") int id);
+    @GET("api/event/{id}")
+    Single<EventResponse> getEventById(@Path("id") int id);
 
     /*@GET("group/{id}/users")
     Call<List<EventResponse>> groupList(@Path("id") int groupId, @Query("sort") String sort);
