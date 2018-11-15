@@ -1,4 +1,4 @@
-package com.example.together.network.endpoint;
+package com.example.together.network.service;
 
 import com.example.together.network.response.UserResponse;
 

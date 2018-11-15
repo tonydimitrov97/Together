@@ -12,18 +12,20 @@ import android.widget.RelativeLayout;
 import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
 import com.example.together.util.CustomOnClickListener;
+import com.example.together.util.ImageDownloader;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
-    private ArrayList<EventImage> galleryList;
+    private List<EventImage> galleryList;
     private Context context;
     private int width;
     
 
-    public GalleryAdapter(Context context, ArrayList<EventImage> galleryList, int width) {
+    public GalleryAdapter(Context context, List<EventImage> galleryList, int width) {
         this.galleryList = galleryList;
         this.context = context;
         this.width = width;
@@ -39,7 +41,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        viewHolder.img.setImageResource((galleryList.get(i).getId()));
+        //viewHolder.img.setImageResource((galleryList.get(i).getId()));
+        new ImageDownloader((ImageView) viewHolder.img)
+                .execute("http://charliesplittstoser.webutu.com/images/" + galleryList.get(i).getPath());
 
         /* Make it so clicking a photo goes to photo view */
         viewHolder.img.setOnClickListener(new CustomOnClickListener(i) {
@@ -72,5 +76,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
             img = (ImageView) view.findViewById(R.id.img);
         }
+    }
+
+    public void setGalleryList(List<EventImage> galleryList) {
+        this.galleryList = galleryList;
     }
 }

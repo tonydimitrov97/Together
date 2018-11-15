@@ -1,12 +1,8 @@
-package com.example.together.network.endpoint;
+package com.example.together.network.service;
 
-import com.example.together.event.Event;
 import com.example.together.network.response.EventResponse;
 
-import java.util.List;
-
 import io.reactivex.Single;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
