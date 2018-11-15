@@ -21,6 +21,8 @@ public class EventImage {
     @Expose
     private Integer likes;
 
+    private final String IMAGE_PATH = "http://charliesplittstoser.webutu.com/images/";
+
     /**
      * No args constructor for use in serialization
      *

@@ -8,7 +8,7 @@ import com.example.together.data.EventPreview;
 import com.example.together.data.EventPreviewAdapter;
 import com.example.together.event.Event;
 import com.example.together.network.ApiClient;
-import com.example.together.network.endpoint.EventService;
+import com.example.together.network.service.EventService;
 import com.example.together.network.response.EventResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,9 @@ public class EventListActivity extends AppCompatActivity {
                             public void onSuccess(EventResponse event) {
                                 eventResponse = event;
                                 createEventList(eventResponse.getResponse());
+                                adapter.setEventList(eventResponse.getResponse());
                                 adapter.notifyDataSetChanged();
+                                //Check response
                             }
 
                             @Override
