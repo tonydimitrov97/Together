@@ -56,8 +56,7 @@
         </activity>
         <activity
             android:name=".EventInfoActivity"
-            android:label="@string/title_activity_event_info"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:label="@string/title_activity_event_info">
         </activity>
     </application>
 
