@@ -41,7 +41,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //viewHolder.img.setImageResource((galleryList.get(i).getId()));
+
+        /* Download an image and set it */
         new ImageDownloader((ImageView) viewHolder.img)
                 .execute("http://charliesplittstoser.webutu.com/images/" + galleryList.get(i).getPath());
 

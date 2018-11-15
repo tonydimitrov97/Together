@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import com.example.together.databinding.ActivityPhotoScreenBinding;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.together.event.Event;
@@ -31,7 +32,6 @@ public class PhotoScreenActivity extends AppCompatActivity {
 
         new ImageDownloader((ImageView) findViewById(R.id.photoScreenImage))
                 .execute("http://charliesplittstoser.webutu.com/images/" + eventImage.getPath());
-
     }
 
 }
