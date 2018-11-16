@@ -7,22 +7,16 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.databinding.DataBindingUtil;
 import com.example.together.databinding.ActivityEventInfoBinding;
 import com.example.together.event.Event;
-import com.example.together.event.EventImage;
 import com.example.together.event.GalleryAdapter;
 import com.example.together.network.ApiClient;
 import com.example.together.network.response.EventImageResponse;
-import com.example.together.network.response.EventResponse;
 import com.example.together.network.service.EventImageService;
-import com.example.together.network.service.EventService;
 import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -70,6 +64,15 @@ public class EventInfoActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return true;
+    }
+
     private void getImages() {
         disposable.add(
                 eventImageService.getPhotos()
@@ -93,5 +96,4 @@ public class EventInfoActivity extends AppCompatActivity {
                         })
         );
     }
-
 }

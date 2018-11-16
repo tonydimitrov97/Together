@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     Button _loginButton;
     TextView _signupLink;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
