@@ -2,6 +2,7 @@ package com.example.together;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import com.example.together.configuration.Configuration;
 import com.example.together.databinding.ActivityPhotoScreenBinding;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -29,8 +30,7 @@ public class PhotoScreenActivity extends AppCompatActivity {
         binding.setPsvm(photoScreenVm);
 
         new ImageDownloader((ImageView) findViewById(R.id.photoScreenImage))
-                .execute("http://charliesplittstoser.webutu.com/images/" + eventImage.getPath());
-
+                .execute(Configuration.SERVER_IP + eventImage.getPath());
     }
 
     @Override
