@@ -49,11 +49,11 @@ public class EventListActivity extends AppCompatActivity {
                 switch(menuItem.getItemId()) {
                     case R.id.createEvent:
                         intent = new Intent(getApplicationContext(), CreateEventActivity.class);
-                        getApplicationContext().startActivity(intent);
+                        startActivity(intent);
                         return true;
                     case R.id.joinEvent:
                         intent = new Intent (getApplicationContext(), JoinEventActivity.class);
-                        getApplicationContext().startActivity(intent);
+                        startActivity(intent);
                         return true;
                     default:
                         return false;
