@@ -2,6 +2,7 @@ package com.example.together;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.KeyEvent;
 
 public class AppSettingsActivity extends Activity {
 
@@ -11,4 +12,11 @@ public class AppSettingsActivity extends Activity {
         setContentView(R.layout.activity_app_settings);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return true;
+    }
 }

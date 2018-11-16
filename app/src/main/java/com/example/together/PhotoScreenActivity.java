@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import com.example.together.databinding.ActivityPhotoScreenBinding;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-
-import com.example.together.event.Event;
 import com.example.together.event.EventImage;
 import com.example.together.util.ImageDownloader;
 import com.example.together.viewmodel.PhotoScreenVm;
@@ -32,6 +31,14 @@ public class PhotoScreenActivity extends AppCompatActivity {
         new ImageDownloader((ImageView) findViewById(R.id.photoScreenImage))
                 .execute("http://charliesplittstoser.webutu.com/images/" + eventImage.getPath());
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return true;
     }
 
 }
