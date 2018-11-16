@@ -9,15 +9,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
 import com.example.together.data.EventPreview;
 import com.example.together.data.EventPreviewAdapter;
-
+import com.example.together.event.Event;
+import com.example.together.network.ApiClient;
+import com.example.together.network.service.EventService;
+import com.example.together.network.response.EventResponse;
 import java.util.ArrayList;
 import java.util.List;
-
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class EventListActivity extends AppCompatActivity {
     // List of all the event previews
@@ -27,6 +30,10 @@ public class EventListActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
 
     BottomNavigationView menu;
+    private EventService eventService;
+    private CompositeDisposable disposable = new CompositeDisposable();
+    private EventResponse eventResponse;
+    private EventPreviewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,9 @@ public class EventListActivity extends AppCompatActivity {
                 }
             }
         });
+        eventService = ApiClient.getClient(getApplicationContext()).create(EventService.class);
+
+        getEvents();
 
         // Getting the RecyclerView from XML
         mRecyclerView = findViewById(R.id.previewRecyclerView);
@@ -62,42 +72,8 @@ public class EventListActivity extends AppCompatActivity {
         // Initializing the event preview list
         previewList = new ArrayList<>();
 
-        // Adding some event previews to the list (for testing purposes)
-        previewList.add(
-                new EventPreview(
-                    "123456",
-                        "Colorado Trip",
-                        "Having fun times in CO +",
-                        R.drawable.test
-                )
-        );
-        previewList.add(
-                new EventPreview(
-                        "123456",
-                        "Minnesota Trip",
-                        "Having fun times in MN +",
-                        R.drawable.test
-                )
-        );
-        previewList.add(
-                new EventPreview(
-                        "123456",
-                        "California Trip",
-                        "Having fun times in CA +",
-                        R.drawable.test
-                )
-        );
-        previewList.add(
-                new EventPreview(
-                        "123456",
-                        "Washington Trip",
-                        "Having fun times in WA +",
-                        R.drawable.test
-                )
-        );
-
         // Creating RecyclerView adapter
-        EventPreviewAdapter adapter = new EventPreviewAdapter(this, previewList);
+        adapter = new EventPreviewAdapter(this, previewList);
 
         // Setting the adapter to RecyclerView
         mRecyclerView.setAdapter(adapter);
@@ -105,10 +81,54 @@ public class EventListActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
         }
         return true;
     }
 
+    private void getEvents() {
+        disposable.add(
+                eventService.getEvents()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<EventResponse>() {
+
+                            @Override
+                            public void onSuccess(EventResponse event) {
+                                eventResponse = event;
+                                createEventList(eventResponse.getResponse());
+                                adapter.setEventList(eventResponse.getResponse());
+                                adapter.notifyDataSetChanged();
+                                //Check response
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println("Error fetching events.");
+                            }
+                        })
+        );
+    }
+
+
+    public void createEventList(List<Event> eventList) {
+
+        for (int i = 0; i < eventList.size(); i++) {
+            previewList.add(
+                    new EventPreview(
+                            eventList.get(i).getEventCode(),
+                            eventList.get(i).getTitle(),
+                            eventList.get(i).getDescription(),
+                            R.drawable.test
+                    )
+            );
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
+    }
 }
