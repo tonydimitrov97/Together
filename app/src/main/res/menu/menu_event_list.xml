@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/addEvent"
-        android:title="add event"
-        android:icon="@drawable/add_event"/>
+        android:id="@+id/createEvent"
+        android:title="@string/event_list_create_event"
+        android:icon="@drawable/create_event" />
+    <item
+        android:id="@+id/joinEvent"
+        android:title="@string/event_list_join_event"
+        android:icon="@drawable/join_event" />
 </menu>

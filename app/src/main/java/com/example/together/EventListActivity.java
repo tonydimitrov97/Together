@@ -1,9 +1,14 @@
 package com.example.together;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import com.example.together.data.EventPreview;
 import com.example.together.data.EventPreviewAdapter;
 import com.example.together.event.Event;
@@ -24,6 +29,7 @@ public class EventListActivity extends AppCompatActivity {
     // Used to hold all the event previews
     RecyclerView mRecyclerView;
 
+    BottomNavigationView menu;
     private EventService eventService;
     private CompositeDisposable disposable = new CompositeDisposable();
     private EventResponse eventResponse;
@@ -34,6 +40,26 @@ public class EventListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
 
+        // Setting listeners for the bottom navigation bar
+        menu = findViewById(R.id.eventListMenu);
+        menu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Intent intent;
+                switch(menuItem.getItemId()) {
+                    case R.id.createEvent:
+                        intent = new Intent(getApplicationContext(), CreateEventActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.joinEvent:
+                        intent = new Intent (getApplicationContext(), JoinEventActivity.class);
+                        startActivity(intent);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
         eventService = ApiClient.getClient(getApplicationContext()).create(EventService.class);
 
         getEvents();
@@ -51,6 +77,14 @@ public class EventListActivity extends AppCompatActivity {
 
         // Setting the adapter to RecyclerView
         mRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return true;
     }
 
     private void getEvents() {
@@ -97,5 +131,4 @@ public class EventListActivity extends AppCompatActivity {
         super.onDestroy();
         disposable.dispose();
     }
-
 }
