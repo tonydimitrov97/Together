@@ -8,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import com.example.together.EventInfoActivity;
 import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
 import com.example.together.configuration.Configuration;
 import com.example.together.util.CustomOnClickListener;
 import com.example.together.util.ImageDownloader;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +28,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     private List<EventImage> galleryList;
     private Context context;
     private int width;
+    private ImageLoader imageLoader;
     
 
-    public GalleryAdapter(Context context, List<EventImage> galleryList, int width) {
+    public GalleryAdapter(Context context, List<EventImage> galleryList, int width, ImageLoader imageLoader) {
         this.galleryList = galleryList;
         this.context = context;
         this.width = width;
+        this.imageLoader = imageLoader;
     }
 
     @NonNull
@@ -43,9 +49,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        /* Download an image and set it */
-        new ImageDownloader((ImageView) viewHolder.img)
-                .execute(Configuration.SERVER_IP + galleryList.get(i).getPath());
+        this.imageLoader.displayImage(Configuration.SERVER_IP + galleryList.get(i).getPath(), viewHolder.img);
 
         /* Make it so clicking a photo goes to photo view */
         viewHolder.img.setOnClickListener(new CustomOnClickListener(i) {

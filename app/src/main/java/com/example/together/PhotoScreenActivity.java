@@ -12,6 +12,8 @@ import com.example.together.event.EventImage;
 import com.example.together.util.ImageDownloader;
 import com.example.together.viewmodel.PhotoScreenVm;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PhotoScreenActivity extends AppCompatActivity {
 
@@ -26,11 +28,11 @@ public class PhotoScreenActivity extends AppCompatActivity {
         PhotoScreenVm photoScreenVm = new PhotoScreenVm(eventImage); //ViewModelProviders.of(this).get(PhotoScreenVm.class);
 
         ActivityPhotoScreenBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_photo_screen);
-
         binding.setPsvm(photoScreenVm);
 
-        new ImageDownloader((ImageView) findViewById(R.id.photoScreenImage))
-                .execute(Configuration.SERVER_IP + eventImage.getPath());
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(PhotoScreenActivity.this));
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(Configuration.SERVER_IP + eventImage.getPath(), (ImageView) findViewById(R.id.photoScreenImage));
     }
 
     @Override
