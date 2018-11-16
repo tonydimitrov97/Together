@@ -2,6 +2,8 @@ package com.example.together.network;
 
 import android.content.Context;
 import android.text.TextUtils;
+
+import com.example.together.configuration.Configuration;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +28,7 @@ public class ApiClient {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.131.67.241:3000/")
+                    .baseUrl(Configuration.SERVER_IP)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

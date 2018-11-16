@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
+import com.example.together.configuration.Configuration;
 import com.example.together.util.CustomOnClickListener;
 import com.example.together.util.ImageDownloader;
 import com.google.gson.Gson;
@@ -44,7 +45,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         /* Download an image and set it */
         new ImageDownloader((ImageView) viewHolder.img)
-                .execute("http://charliesplittstoser.webutu.com/images/" + galleryList.get(i).getPath());
+                .execute(Configuration.SERVER_IP + galleryList.get(i).getPath());
 
         /* Make it so clicking a photo goes to photo view */
         viewHolder.img.setOnClickListener(new CustomOnClickListener(i) {
