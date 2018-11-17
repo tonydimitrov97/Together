@@ -14,6 +14,9 @@ public interface UserService {
     @GET("api/user/{id}")
     Call<UserResponse> getUserById(@Path("id") int id);
 
+   /* @GET("api/user/{id}")
+    Call<UserResponse> getUserById(@Path("id") int id);*/
+
     /*@GET("group/{id}/users")
     Call<List<EventResponse>> groupList(@Path("id") int groupId, @Query("sort") String sort);
 

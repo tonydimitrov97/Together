@@ -2,15 +2,17 @@ package com.example.together;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.databinding.DataBindingUtil;
+import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.together.databinding.ActivityEventInfoBinding;
 import com.example.together.event.Event;
@@ -22,8 +24,6 @@ import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -69,6 +69,19 @@ public class EventInfoActivity extends AppCompatActivity {
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(EventInfoActivity.this));
         ImageLoader imageLoader = ImageLoader.getInstance();
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+
+        myToolbar.findViewById(R.id.eventSettingsButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EventSettingsActivity.class);
+
+                startActivity(intent);
+            }
+        });
 
         adapter = new GalleryAdapter(getApplicationContext(), eventInfoVm.getEventGallery(), width, imageLoader);
         recyclerView.setAdapter(adapter);

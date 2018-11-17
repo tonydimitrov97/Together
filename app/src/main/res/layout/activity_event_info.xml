@@ -9,7 +9,35 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/title_activity_event_info"
+            app:titleTextColor="@android:color/background_light">
+
+
+            <ImageButton
+                android:id="@+id/eventSettingsButton"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/event_settings"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="8dp"
+                tools:layout_editor_absoluteX="307dp"
+                tools:layout_editor_absoluteY="3dp" />
+
+
+        </android.support.v7.widget.Toolbar>
 
         <TextView
             android:id="@+id/eventTitleHeading"
@@ -22,9 +50,10 @@
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
         <TextView
             android:id="@+id/dateRange"
