@@ -11,6 +11,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.together.network.response.EventImageResponse;
+import com.example.together.network.response.UserResponse;
+import com.example.together.network.service.EventImageService;
+import com.example.together.network.service.UserService;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -19,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText _passwordText;
     Button _loginButton;
     TextView _signupLink;
+    private UserService userService;
+    private UserResponse userResponse;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty() || password.length() < 7 || password.length() > 25) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
@@ -135,4 +148,28 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
     }
+
+   /* private void getUser() {
+        disposable.add(
+                userService.getUserByEmail()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+
+                            @Override
+                            public void onSuccess(UserResponse response) {
+                                userResponse = response;
+                                //eventInfoVm.setEventGallery(eventImageResponse.getResponse());
+                                //adapter.setGalleryList(eventImageResponse.getResponse());
+                                //adapter.notifyDataSetChanged();
+                                //Check response
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println("Error fetching events.");
+                            }
+                        })
+        );
+    }*/
 }

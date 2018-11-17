@@ -8,19 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import com.example.together.EventInfoActivity;
 import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
 import com.example.together.configuration.Configuration;
 import com.example.together.util.CustomOnClickListener;
-import com.example.together.util.ImageDownloader;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
