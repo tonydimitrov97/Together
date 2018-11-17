@@ -2,9 +2,10 @@ package com.example.together;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
-public class JoinEventActivity extends Activity {
+public class JoinEventActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

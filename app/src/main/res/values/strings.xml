@@ -97,10 +97,19 @@
     <string name="title_activity_add_event">add_event</string>
     <string name="title_activity_photo_screen">photo_screen</string>
     <string name="title_activity_join_event">join_event</string>
-    <string name="title_activity_create_event">create_event</string>
+    <string name="title_activity_create_event">Create Event</string>
     <string name="title_activity_signup">Sign Up</string>
-    <string name="event_list_create_event">create event</string>
-    <string name="event_list_join_event">join event</string>
+    <string name="event_list_create_event">create</string>
+    <string name="event_list_join_event">join</string>
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="join_event_button">Join</string>
+    <string name="join_event_hint">Event ID</string>
+    <string name="create_event_title_input">Title</string>
+    <string name="create_event_start_date_input">Start Date</string>
+    <string name="create_event_end_date_input">End Date</string>
+    <string name="create_event_location_input">Location</string>
+    <string name="create_event_switch">Public</string>
+    <string name="create_event_invite_users">Invite Users</string>
+    <string name="create_event_button">Create Event</string>
 
 </resources>
