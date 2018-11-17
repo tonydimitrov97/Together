@@ -4,151 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateEventActivity">
+    android:background="@color/colorPrimary"
+    android:theme="@style/JoinCreateEventTheme">
 
-    <TextView
-        android:id="@+id/eventTitleLabel"
-        android:layout_width="97dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Event Title:"
-        android:textAlignment="textEnd"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/eventTitleInput"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/eventTitleInput"
-        android:layout_width="230dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Title"
+        android:hint="@string/create_event_title_input"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/eventTitleLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff"
+        tools:style="@style/Theme.App.Base"/>
 
-    <TextView
-        android:id="@+id/dateRangeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Date Range:"
-        android:textAlignment="textEnd"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/startDateInput"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/startDateInput"
-        android:layout_width="109dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Start"
+        android:hint="@string/create_event_start_date_input"
         android:inputType="date"
         app:layout_constraintEnd_toStartOf="@+id/endDateInput"
-        app:layout_constraintStart_toEndOf="@+id/dateRangeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/eventTitleInput" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventTitleInput"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff" />
 
-    <EditText
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/endDateInput"
-        android:layout_width="114dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:ems="10"
-        android:hint="End"
+        android:hint="@string/create_event_end_date_input"
         android:inputType="date"
         app:layout_constraintBottom_toBottomOf="@+id/startDateInput"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/startDateInput"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff"/>
 
-    <TextView
-        android:id="@+id/locationLabel"
-        android:layout_width="99dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:gravity="right"
-        android:text="Location:"
-        android:textAlignment="gravity"
-        android:textAllCaps="false"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/locationInput"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/locationInput"
-        android:layout_width="234dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Minneapolis, MN"
+        android:hint="@string/create_event_location_input"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/locationLabel"
-        app:layout_constraintTop_toBottomOf="@+id/endDateInput" />
-
-    <TextView
-        android:id="@+id/privacyLabel"
-        android:layout_width="99dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Privacy:"
-        android:textAlignment="textEnd"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/privacySwitch"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endDateInput"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff"/>
 
     <Switch
         android:id="@+id/privacySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Public"
-        app:layout_constraintStart_toStartOf="@+id/locationInput"
+        android:layout_marginTop="28dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff"
+        android:text="@string/create_event_switch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationInput" />
 
     <Button
+        android:theme="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/createEventButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Create Event"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="28dp"
+        android:text="@string/create_event_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#ffffff"
+        android:textColor="@color/colorPrimary"/>
 
     <Button
         android:id="@+id/InviteUsersButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="Invite Users"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="#ffffff"
+        android:text="@string/create_event_invite_users"
+        android:textColor="@color/colorPrimary"
+        android:theme="@style/Widget.AppCompat.Button.Colored"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
