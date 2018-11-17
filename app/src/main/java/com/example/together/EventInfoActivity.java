@@ -2,6 +2,7 @@ package com.example.together;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.databinding.DataBindingUtil;
+import android.view.View;
+
 import com.example.together.databinding.ActivityEventInfoBinding;
 import com.example.together.event.Event;
 import com.example.together.event.GalleryAdapter;
@@ -17,6 +20,11 @@ import com.example.together.network.response.EventImageResponse;
 import com.example.together.network.service.EventImageService;
 import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -48,7 +56,7 @@ public class EventInfoActivity extends AppCompatActivity {
         ActivityEventInfoBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_info);
         binding.setEvm(eventInfoVm);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.eventGallery);
+        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.eventGallery);
         recyclerView.setHasFixedSize(true);
 
         /* Get fixed width for each picture based on screen size */
@@ -59,11 +67,13 @@ public class EventInfoActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 4);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new GalleryAdapter(getApplicationContext(), eventInfoVm.getEventGallery(), width);
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(EventInfoActivity.this));
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
+        adapter = new GalleryAdapter(getApplicationContext(), eventInfoVm.getEventGallery(), width, imageLoader);
         recyclerView.setAdapter(adapter);
 
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
