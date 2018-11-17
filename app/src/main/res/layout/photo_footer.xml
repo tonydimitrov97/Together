@@ -33,30 +33,17 @@
 
         <TextView
             android:id="@+id/photoCaptionLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
-            android:text="@{pfvm.getCaption()}"
-            app:layout_constraintBottom_toTopOf="@+id/commentButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photoCreatorName"
-            app:layout_constraintVertical_bias="0.0" />
-
-
-        <ImageButton
-            android:id="@+id/commentButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/privacyButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-            app:srcCompat="@drawable/comment" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:text="@{pfvm.caption}"
+            app:layout_constraintBottom_toTopOf="@+id/commentConstraint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photoCreatorName" />
 
         <ImageButton
             android:id="@+id/privacyButton"
@@ -68,19 +55,49 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/commentButton"
+            app:layout_constraintStart_toEndOf="@+id/commentConstraint"
             app:srcCompat="@drawable/privacy_public" />
 
-
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/commentConstraint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/privacyButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/likeConstraint">
+
+            <ImageButton
+                android:id="@+id/commentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/commentLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginStart="8dp"
+                android:text="@{String.valueOf(pfvm.numComments)}"
+                app:layout_constraintBottom_toBottomOf="@+id/commentButton"
+                app:layout_constraintStart_toEndOf="@+id/commentButton" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/likeConstraint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/commentButton"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/commentConstraint"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageButton
@@ -98,13 +115,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginStart="4dp"
-                android:text="@{String.valueOf(pfvm.getLikes())}"
+                android:text="@{String.valueOf(pfvm.numLikes)}"
                 app:layout_constraintBottom_toBottomOf="@+id/likeButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/likeButton" />
 
         </android.support.constraint.ConstraintLayout>
-
 
     </android.support.constraint.ConstraintLayout>
 
