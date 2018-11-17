@@ -119,11 +119,18 @@ public class EventListActivity extends AppCompatActivity {
                     new EventPreview(
                             eventList.get(i).getEventCode(),
                             eventList.get(i).getTitle(),
-                            eventList.get(i).getDescription(),
+                            getShortDescription(eventList.get(i).getDescription()),
                             R.drawable.test
                     )
             );
         }
+    }
+
+    public String getShortDescription(String description) {
+        if(description.length() > 75)
+            return description.substring(0, 75) + "...";
+        else
+            return description;
     }
 
     @Override

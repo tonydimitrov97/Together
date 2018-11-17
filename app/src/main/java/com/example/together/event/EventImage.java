@@ -20,6 +20,15 @@ public class EventImage {
     @SerializedName("likes")
     @Expose
     private Integer likes;
+    @SerializedName("location")
+    @Expose
+    private String location;
+    @SerializedName("date_created")
+    @Expose
+    private String dateCreated;
+    @SerializedName("caption")
+    @Expose
+    private String caption;
 
     /**
      * No args constructor for use in serialization
@@ -32,21 +41,23 @@ public class EventImage {
      *
      * @param id
      * @param eventId
+     * @param location
      * @param likes
      * @param userId
      * @param path
+     * @param dateCreated
+     * @param caption
      */
-    public EventImage(Integer id, Integer eventId, Integer userId, String path, Integer likes) {
+    public EventImage(Integer id, Integer eventId, Integer userId, String path, Integer likes, String location, String dateCreated, String caption) {
+        super();
         this.id = id;
         this.eventId = eventId;
         this.userId = userId;
         this.path = path;
         this.likes = likes;
-    }
-
-    public EventImage(Integer id) {
-        this.id = id;
-        this.path = "http://charliesplittstoser.webutu.com/images/image1.jpg";
+        this.location = location;
+        this.dateCreated = dateCreated;
+        this.caption = caption;
     }
 
     public Integer getId() {
@@ -87,6 +98,30 @@ public class EventImage {
 
     public void setLikes(Integer likes) {
         this.likes = likes;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 
 }

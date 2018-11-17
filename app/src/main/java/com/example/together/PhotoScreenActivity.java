@@ -37,13 +37,13 @@ public class PhotoScreenActivity extends AppCompatActivity {
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(Configuration.SERVER_IP + eventImage.getPath(), (ImageView) findViewById(R.id.photoScreenImage));
 
-        final ImageButton likeButton = findViewById(R.id.likeButton);
+        ImageButton likeButton = findViewById(R.id.likeButton);
         likeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(photoScreenVm.handleLike())
-                    likeButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    ((ImageButton)v).setImageResource(R.drawable.ic_favorite_black_24dp);
                 else
-                    likeButton.setImageResource(R.drawable.like_outline);
+                    ((ImageButton)v).setImageResource(R.drawable.like_outline);
 
                 binding.invalidateAll();
             }

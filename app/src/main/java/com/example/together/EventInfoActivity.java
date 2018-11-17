@@ -73,12 +73,10 @@ public class EventInfoActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-
         myToolbar.findViewById(R.id.eventSettingsButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), EventSettingsActivity.class);
-
                 startActivity(intent);
             }
         });
@@ -109,7 +107,6 @@ public class EventInfoActivity extends AppCompatActivity {
                                 eventInfoVm.setEventGallery(eventImageResponse.getResponse());
                                 adapter.setGalleryList(eventImageResponse.getResponse());
                                 adapter.notifyDataSetChanged();
-                                //Check response
                             }
 
                             @Override
@@ -118,5 +115,11 @@ public class EventInfoActivity extends AppCompatActivity {
                             }
                         })
         );
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }
