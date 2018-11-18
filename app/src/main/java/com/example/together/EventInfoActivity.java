@@ -17,6 +17,7 @@ import com.example.together.event.GalleryAdapter;
 import com.example.together.network.ApiClient;
 import com.example.together.network.response.EventImageResponse;
 import com.example.together.network.service.EventImageService;
+import com.example.together.util.EventOnClickListener;
 import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -34,6 +35,7 @@ public class EventInfoActivity extends AppCompatActivity {
     private CompositeDisposable disposable = new CompositeDisposable();
     private EventImageResponse eventImageResponse;
     private EventInfoVm eventInfoVm;
+    private Event event;
 
     @SuppressLint("CheckResult")
     @Override
@@ -43,7 +45,7 @@ public class EventInfoActivity extends AppCompatActivity {
         /* Capture Intent */
         Intent intent = getIntent();
         String json = intent.getStringExtra("eventObject");
-        Event event = new Gson().fromJson(json, Event.class);
+        event = new Gson().fromJson(json, Event.class);
 
         eventImageService = ApiClient.getClient(getApplicationContext()).create(EventImageService.class);
         getImages();
@@ -74,6 +76,11 @@ public class EventInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), EventSettingsActivity.class);
+
+                Gson gson = new Gson();
+                String json = gson.toJson(event);
+
+                intent.putExtra("eventObject", json);
                 startActivity(intent);
             }
         });
