@@ -43,7 +43,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        this.imageLoader.displayImage(Configuration.SERVER_IP + galleryList.get(i).getPath(), viewHolder.img);
+        this.imageLoader.displayImage(Configuration.SERVER_IP + "images/" + galleryList.get(i).getPath(), viewHolder.img);
 
         /* Make it so clicking a photo goes to photo view */
         viewHolder.img.setOnClickListener(new IntegerOnClickListener(i) {
