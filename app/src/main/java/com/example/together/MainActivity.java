@@ -14,29 +14,17 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
+import com.example.together.configuration.Configuration;
 import com.example.together.network.response.EventImageResponse;
 import com.example.together.network.service.EventImageService;
 import com.google.android.cameraview.CameraView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import cz.msebera.android.httpclient.Header;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity {
     CameraView mCameraView = null;
@@ -46,9 +34,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView captureButton;
     private Handler mBackgroundHandler;
     ProgressDialog progressDialog;
+    ProgressDialog prgDialog;
     private EventImageService eventImageService;
     private CompositeDisposable disposable = new CompositeDisposable();
     private EventImageResponse eventImageResponse;
+    RequestParams params = new RequestParams();
+
     String URL = "http://10.0.0.40:3000/api/photo/upload";
 
     @Override
@@ -59,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
         }
+
+        prgDialog = new ProgressDialog(this);
+        prgDialog.setCancelable(false);
+
 
         eventInfoView = findViewById(R.id.eventInfo);
         eventInfoView.setOnClickListener(new View.OnClickListener() {
@@ -144,59 +139,51 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPictureTaken(CameraView cameraView, final byte[] data) {
-            Toast.makeText(cameraView.getContext(), R.string.picture_taken, Toast.LENGTH_SHORT)
-                    .show();
 
-            eventImageService.uploadPhoto(data).enqueue(new Callback<byte[]>() {
-                @Override
-                public void onResponse(Call<byte[]> call, retrofit2.Response<byte[]> response) {
-                    if (response.isSuccessful()) {
-                        System.out.println("Success");
-                    }
-                }
+            String encodedString = Base64.encodeToString(data, 0);
+            params.put("image", encodedString);
+
+            prgDialog.setMessage("Uploading...");
+            prgDialog.show();
+
+            uploadPhoto();
 
 
-                @Override
-                public void onFailure(Call<byte[]> call, Throwable t) {
-                    System.out.println("Failure");
-                }
-            });
         }
-
-            //progressDialog = new ProgressDialog(MainActivity.this);
-            //progressDialog.setMessage("Uploading, please wait...");
-            //progressDialog.show();
-
-            //final String imageString = Base64.encodeToString(data, Base64.DEFAULT);
-
-            //sending image to server
-            /*StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String s) {
-                    progressDialog.dismiss();
-                    if(s.equals("true")){
-                        Toast.makeText(MainActivity.this, "Uploaded Successful", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Some error occurred!", Toast.LENGTH_LONG).show();
-                    }
-                }
-            } ,new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    Toast.makeText(MainActivity.this, "Some error occurred -> " + volleyError, Toast.LENGTH_LONG).show();;
-                }
-            }) {
-                //adding parameters to send
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> parameters = new HashMap<>();
-                    parameters.put("image", imageString);
-                    return parameters;
-                }
-            };
-
-            RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
-            rQueue.add(request);
-        }*/
     };
+
+    // Make Http call to upload Image to Php server
+    public void uploadPhoto() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        // Don't forget to change the IP address to your LAN address. Port no as well.
+        client.post(Configuration.UPLOAD_IP,
+                params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        prgDialog.hide();
+                        System.out.println("Image Uploaded.");
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        // Hide Progress Dialog
+                        prgDialog.hide();
+
+                        if (statusCode == 404) {
+                            System.out.println("Requested resource not found.");
+                        }
+                        // When Http response code is '500'
+                        else if (statusCode == 500) {
+                            System.out.println("Something went wrong at server end.");
+                        }
+                        // When Http response code other than 404, 500
+                        else {
+                            System.out.println("Error Occured n Most Common Error: n1. Device not connected to Internetn2. Web App is not deployed in App servern3. App server is not runningn HTTP Status code : "
+                            + statusCode);
+                        }
+                    }
+
+                });
+    }
+
 }

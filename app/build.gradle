@@ -66,6 +66,7 @@ dependencies {
     implementation 'com.koushikdutta.ion:ion:2.2.1'
     implementation 'com.koushikdutta.async:androidasync:2.2.1'
     implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
 
 
 
