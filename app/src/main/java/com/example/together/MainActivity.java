@@ -16,14 +16,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.example.together.configuration.Configuration;
-import com.example.together.network.response.EventImageResponse;
-import com.example.together.network.service.EventImageService;
 import com.google.android.cameraview.CameraView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity {
     CameraView mCameraView = null;

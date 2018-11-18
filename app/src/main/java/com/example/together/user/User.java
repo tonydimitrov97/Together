@@ -1,3 +1,4 @@
+
 package com.example.together.user;
 
 import com.google.gson.annotations.Expose;
@@ -17,6 +18,9 @@ public class User {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("activeEvent")
+    @Expose
+    private int activeEvent;
 
     /**
      * No args constructor for use in serialization
@@ -30,14 +34,16 @@ public class User {
      * @param id
      * @param email
      * @param name
+     * @param activeEvent
      * @param password
      */
-    public User(Integer id, String name, String password, String email) {
+    public User(Integer id, String name, String password, String email, int activeEvent) {
         super();
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
+        this.activeEvent = activeEvent;
     }
 
     public Integer getId() {
@@ -70,6 +76,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getActiveEvent() {
+        return activeEvent;
+    }
+
+    public void setActiveEvent(int activeEvent) {
+        this.activeEvent = activeEvent;
     }
 
 }
