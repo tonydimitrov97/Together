@@ -7,25 +7,24 @@
     android:background="@color/colorPrimary"
     android:theme="@style/JoinCreateEventTheme">
 
-    <android.support.design.widget.TextInputEditText
+    <EditText
         android:id="@+id/eventTitleInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="#ffffff"
         android:ems="10"
         android:hint="@string/create_event_title_input"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#ffffff"
-        android:backgroundTint="#ffffff"
-        tools:style="@style/Theme.App.Base"/>
+        tools:style="@style/Theme.App.Base" />
 
-    <android.support.design.widget.TextInputEditText
+    <EditText
         android:id="@+id/startDateInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -43,7 +42,7 @@
         android:textColorHint="#ffffff"
         android:backgroundTint="#ffffff" />
 
-    <android.support.design.widget.TextInputEditText
+    <EditText
         android:id="@+id/endDateInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -59,7 +58,7 @@
         android:textColorHint="#ffffff"
         android:backgroundTint="#ffffff"/>
 
-    <android.support.design.widget.TextInputEditText
+    <EditText
         android:id="@+id/locationInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -80,14 +79,14 @@
         android:id="@+id/privacySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#ffffff"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#ffffff"
         android:text="@string/create_event_switch"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationInput" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
 
     <Button
         android:theme="@style/Widget.AppCompat.Button.Colored"
@@ -111,15 +110,32 @@
         android:layout_width="110dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:background="#ffffff"
         android:text="@string/create_event_invite_users"
         android:textColor="@color/colorPrimary"
         android:theme="@style/Widget.AppCompat.Button.Colored"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/privacySwitch" />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#ffffff"
+        android:ems="10"
+        android:hint="@string/create_event_description"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationInput" />
 
 </android.support.constraint.ConstraintLayout>

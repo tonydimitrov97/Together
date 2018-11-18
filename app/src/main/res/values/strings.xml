@@ -112,5 +112,6 @@
     <string name="create_event_invite_users">Invite Users</string>
     <string name="create_event_button">Create Event</string>
     <string name="picture_taken">Picture Taken</string>
+    <string name="create_event_description">Description</string>
 
 </resources>

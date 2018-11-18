@@ -14,17 +14,12 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.example.together.configuration.Configuration;
-import com.example.together.network.response.EventImageResponse;
-import com.example.together.network.service.EventImageService;
 import com.google.android.cameraview.CameraView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import cz.msebera.android.httpclient.Header;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity {
     CameraView mCameraView = null;
@@ -33,14 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView eventListView;
     ImageView captureButton;
     private Handler mBackgroundHandler;
-    ProgressDialog progressDialog;
     ProgressDialog prgDialog;
-    private EventImageService eventImageService;
-    private CompositeDisposable disposable = new CompositeDisposable();
-    private EventImageResponse eventImageResponse;
     RequestParams params = new RequestParams();
-
-    String URL = "http://10.0.0.40:3000/api/photo/upload";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
