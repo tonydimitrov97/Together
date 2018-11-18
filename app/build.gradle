@@ -62,6 +62,11 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp-urlconnection:3.1.0"
     implementation "com.squareup.okhttp3:logging-interceptor:3.4.1"
 
+    /* Image uploading stuff */
+    implementation 'com.koushikdutta.ion:ion:2.2.1'
+    implementation 'com.koushikdutta.async:androidasync:2.2.1'
+    implementation 'com.android.volley:volley:1.1.1'
+
 
 
 }
