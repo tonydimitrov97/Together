@@ -16,13 +16,13 @@ import com.example.together.event.Event;
 import com.example.together.event.GalleryAdapter;
 import com.example.together.network.ApiClient;
 import com.example.together.network.response.EventImageResponse;
+import com.example.together.network.response.UserEventMapResponse;
 import com.example.together.network.service.EventImageService;
-import com.example.together.util.EventOnClickListener;
+import com.example.together.network.service.UserEventMapService;
 import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -34,8 +34,11 @@ public class EventInfoActivity extends AppCompatActivity {
     private EventImageService eventImageService;
     private CompositeDisposable disposable = new CompositeDisposable();
     private EventImageResponse eventImageResponse;
+    private UserEventMapResponse userEventMapResponse;
+    private UserEventMapService userEventMapService;
     private EventInfoVm eventInfoVm;
     private Event event;
+    ActivityEventInfoBinding binding;
 
     @SuppressLint("CheckResult")
     @Override
@@ -47,13 +50,18 @@ public class EventInfoActivity extends AppCompatActivity {
         String json = intent.getStringExtra("eventObject");
         event = new Gson().fromJson(json, Event.class);
 
+        /* Get all images for event */
         eventImageService = ApiClient.getClient(getApplicationContext()).create(EventImageService.class);
         getImages(event.getId());
 
         /* Setup view model and data binding */
         eventInfoVm = new EventInfoVm(event);
-        ActivityEventInfoBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_info);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_event_info);
         binding.setEvm(eventInfoVm);
+
+        /* Get user count */
+        userEventMapService = ApiClient.getClient(getApplicationContext()).create(UserEventMapService.class);
+        getUserAmount(event.getId());
 
         final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.eventGallery);
         recyclerView.setHasFixedSize(true);
@@ -90,6 +98,16 @@ public class EventInfoActivity extends AppCompatActivity {
 
     }
 
+    public void updateUserCount(int userCount) {
+        eventInfoVm.setUserCount(userCount);
+        binding.invalidateAll();
+    }
+
+    public void updatePhotoCount(int photoCount) {
+        eventInfoVm.setPhotoCount(photoCount);
+        binding.invalidateAll();
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode==KeyEvent.KEYCODE_BACK) {
@@ -111,11 +129,33 @@ public class EventInfoActivity extends AppCompatActivity {
                                 eventInfoVm.setEventGallery(eventImageResponse.getResponse());
                                 adapter.setGalleryList(eventImageResponse.getResponse());
                                 adapter.notifyDataSetChanged();
+                                updatePhotoCount(eventImageResponse.getResponse().size());
                             }
 
                             @Override
                             public void onError(Throwable e) {
                                 System.out.println("Error fetching events.");
+                            }
+                        })
+        );
+    }
+
+    private void getUserAmount(int eventId) {
+        disposable.add(
+                userEventMapService.getUsersByEventId(eventId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<UserEventMapResponse>() {
+
+                            @Override
+                            public void onSuccess(UserEventMapResponse response) {
+                                userEventMapResponse = response;
+                                updateUserCount(userEventMapResponse.getResponse().size());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println("Error fetching users.");
                             }
                         })
         );

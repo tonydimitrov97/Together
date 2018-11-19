@@ -81,4 +81,10 @@ public class CreateEventActivity extends AppCompatActivity {
                         })
         );
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
+    }
 }

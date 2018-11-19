@@ -2,6 +2,7 @@ package com.example.together.network.service;
 
 import com.example.together.network.response.UserResponse;
 
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -9,10 +10,13 @@ import retrofit2.http.Path;
 public interface UserService {
 
     @GET("api/user")
-    Call<UserResponse> getUsers();
+    Single<UserResponse> getUsers();
 
     @GET("api/user/{id}")
-    Call<UserResponse> getUserById(@Path("id") int id);
+    Single<UserResponse> getUserById(@Path("id") int id);
+
+    @GET("api/user/userEvent/{eventId}")
+    Single<UserResponse> getUsersByEventId(@Path("eventId") int eventId);
 
    /* @GET("api/user/{id}")
     Call<UserResponse> getUserById(@Path("id") int id);*/
