@@ -17,8 +17,8 @@ import retrofit2.http.Path;
         @GET("api/photo/{id}")
         Single<EventImageResponse> getPhotoById(@Path("id") int id);
 
-        @GET("api/photo/{eventId}")
-        Single<EventImageResponse> getPhotosByEventId(@Path("id") int eventId);
+        @GET("api/photo/eventPhotos/{eventId}")
+        Single<EventImageResponse> getPhotosByEventId(@Path("eventId") int eventId);
 
         @FormUrlEncoded
         @POST("api/photo/upload")

@@ -48,7 +48,7 @@ public class EventInfoActivity extends AppCompatActivity {
         event = new Gson().fromJson(json, Event.class);
 
         eventImageService = ApiClient.getClient(getApplicationContext()).create(EventImageService.class);
-        getImages();
+        getImages(event.getId());
 
         /* Setup view model and data binding */
         eventInfoVm = new EventInfoVm(event);
@@ -98,9 +98,9 @@ public class EventInfoActivity extends AppCompatActivity {
         return true;
     }
 
-    private void getImages() {
+    private void getImages(int eventId) {
         disposable.add(
-                eventImageService.getPhotos()
+                eventImageService.getPhotosByEventId(eventId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(new DisposableSingleObserver<EventImageResponse>() {
