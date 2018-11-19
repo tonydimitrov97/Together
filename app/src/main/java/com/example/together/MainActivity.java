@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.example.together.configuration.Configuration;
 import com.google.android.cameraview.CameraView;
@@ -27,9 +28,23 @@ public class MainActivity extends AppCompatActivity {
     ImageView eventInfoView;
     ImageView eventListView;
     ImageView captureButton;
+    ImageButton switchCamera;
+    ImageButton flashButton;
     private Handler mBackgroundHandler;
     ProgressDialog prgDialog;
     RequestParams params = new RequestParams();
+
+    private static final int[] FLASH_OPTIONS = {
+            CameraView.FLASH_OFF,
+            CameraView.FLASH_ON,
+    };
+
+    private static final int[] FLASH_ICONS = {
+            R.drawable.flash_off,
+            R.drawable.flash_on,
+    };
+
+    private int mCurrentFlash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +81,26 @@ public class MainActivity extends AppCompatActivity {
         if (captureButton != null) {
             captureButton.setOnClickListener(mOnClickListener);
         }
+
+        switchCamera = findViewById(R.id.switchCamera);
+        switchCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int facing = mCameraView.getFacing();
+                mCameraView.setFacing(facing == CameraView.FACING_FRONT ?
+                        CameraView.FACING_BACK : CameraView.FACING_FRONT);
+            }
+        });
+
+        flashButton = findViewById(R.id.flash_off);
+        flashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentFlash = (mCurrentFlash + 1) % FLASH_OPTIONS.length;
+                flashButton.setImageResource(FLASH_ICONS[mCurrentFlash]);
+                mCameraView.setFlash(FLASH_OPTIONS[mCurrentFlash]);
+            }
+        });
     }
 
     @Override
@@ -136,8 +171,6 @@ public class MainActivity extends AppCompatActivity {
             prgDialog.show();
 
             uploadPhoto();
-
-
         }
     };
 
@@ -174,5 +207,4 @@ public class MainActivity extends AppCompatActivity {
 
                 });
     }
-
 }
