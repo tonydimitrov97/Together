@@ -23,10 +23,4 @@ public interface EventService {
                     @Field("location") String location, @Field("creatorId") int creatorId, @Field("description") String description,
                     @Field("public") boolean _public);
 
-    /*@GET("group/{id}/users")
-    Call<List<EventResponse>> groupList(@Path("id") int groupId, @Query("sort") String sort);
-
-    @POST("users/new")
-    Call<EventResponse> createUser(@Body EventResponse event);*/
-
 }

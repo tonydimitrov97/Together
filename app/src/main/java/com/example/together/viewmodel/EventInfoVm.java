@@ -12,15 +12,21 @@ public class EventInfoVm extends ViewModel {
     private String eventTitle;
     private String eventDescription;
     private String eventLocation;
+    private int userCount;
     private List<EventImage> eventGallery;
-    private int numPhotos;
+    private int photoCount;
 
     public EventInfoVm(Event event) {
+        this.userCount = 1;
         this.event = event;
         this.eventTitle = event.getTitle();
         this.eventDescription = event.getDescription();
         this.eventLocation = event.getLocation();
         this.eventGallery = new ArrayList<EventImage>();
+    }
+
+    public void setUserCount(int userCount) {
+        this.userCount = userCount;
     }
 
     public String getEventLocation() {
@@ -47,4 +53,15 @@ public class EventInfoVm extends ViewModel {
         this.eventGallery = eventGallery;
     }
 
+    public int getUserCount() {
+        return userCount;
+    }
+
+    public void setPhotoCount(int photoCount) {
+        this.photoCount = photoCount;
+    }
+
+    public int getPhotoCount() {
+        return photoCount;
+    }
 }

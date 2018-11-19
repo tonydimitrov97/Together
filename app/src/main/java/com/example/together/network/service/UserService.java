@@ -13,10 +13,13 @@ import retrofit2.http.Path;
 public interface UserService {
 
     @GET("api/user")
-    Call<UserResponse> getUsers();
+    Single<UserResponse> getUsers();
 
     @GET("api/user/{id}")
-    Call<UserResponse> getUserById(@Path("id") int id);
+    Single<UserResponse> getUserById(@Path("id") int id);
+
+    @GET("api/user/userEvent/{eventId}")
+    Single<UserResponse> getUsersByEventId(@Path("eventId") int eventId);
 
     @FormUrlEncoded
     @POST("api/user/login")
