@@ -3,7 +3,6 @@ package com.example.together.network.service;
 import com.example.together.network.response.UserResponse;
 
 import io.reactivex.Single;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;

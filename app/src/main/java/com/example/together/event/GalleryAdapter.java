@@ -9,27 +9,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
 import com.example.together.configuration.Configuration;
+import com.example.together.user.User;
 import com.example.together.util.IntegerOnClickListener;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import java.util.List;
 
+import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     private List<EventImage> galleryList;
     private Context context;
     private int width;
     private ImageLoader imageLoader;
+    private User user;
+    private Gson gson;
     
 
-    public GalleryAdapter(Context context, List<EventImage> galleryList, int width, ImageLoader imageLoader) {
+    public GalleryAdapter(Context context, List<EventImage> galleryList, int width, ImageLoader imageLoader, User user) {
         this.galleryList = galleryList;
         this.context = context;
         this.width = width;
         this.imageLoader = imageLoader;
+        this.user = user;
+        this.gson = new Gson();
     }
 
     @NonNull
@@ -49,14 +55,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         viewHolder.img.setOnClickListener(new IntegerOnClickListener(i) {
             public void onClick(View v) {
                 int index = this.getIndex();
-                Intent intent = new Intent(context, PhotoScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                Gson gson = new Gson();
-                String json = gson.toJson(galleryList.get(index));
-
-                intent.putExtra("imageObject", json);
-                context.startActivity(intent);
+                Intent putIntent = new Intent(context, PhotoScreenActivity.class);
+                putIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                String imageJson = gson.toJson(galleryList.get(index));
+                String userJson = gson.toJson(user);
+                putIntent.putExtra("imageObject", imageJson);
+                putIntent.putExtra("userObject", userJson);
+                context.startActivity(putIntent);
             }
         });
 

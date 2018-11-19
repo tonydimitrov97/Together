@@ -5,21 +5,25 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
 import com.example.together.configuration.Configuration;
+import com.example.together.user.User;
 import com.google.android.cameraview.CameraView;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     ImageButton switchCamera;
     ImageButton flashButton;
     private Handler mBackgroundHandler;
+    private User user;
     ProgressDialog prgDialog;
+    Gson gson;
     RequestParams params = new RequestParams();
 
     private static final int[] FLASH_OPTIONS = {
@@ -50,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        gson = new Gson();
+
+        /* Capture Intent */
+        Intent intent = getIntent();
+        String json = intent.getStringExtra("userObject");
+        user = gson.fromJson(json, User.class);
+
         mCameraView = findViewById(R.id.camera);
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
@@ -64,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), EventInfoActivity.class);
+                String userJson = gson.toJson(user);
+                intent.putExtra("userObject", userJson);
                 v.getContext().startActivity(intent);
             }
         });
@@ -73,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), EventListActivity.class);
+                String userJson = gson.toJson(user);
+                intent.putExtra("userObject", userJson);
                 v.getContext().startActivity(intent);
             }
         });
@@ -101,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 mCameraView.setFlash(FLASH_OPTIONS[mCurrentFlash]);
             }
         });
+
     }
 
     @Override

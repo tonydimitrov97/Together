@@ -1,8 +1,10 @@
 package com.example.together.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
+
 import com.example.together.event.Event;
 import com.example.together.event.EventImage;
+
 import java.util.ArrayList;
 import java.util.List;
 

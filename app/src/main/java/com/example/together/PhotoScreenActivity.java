@@ -2,17 +2,16 @@ package com.example.together;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import com.example.together.configuration.Configuration;
-import com.example.together.databinding.ActivityPhotoScreenBinding;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.example.together.configuration.Configuration;
+import com.example.together.databinding.ActivityPhotoScreenBinding;
 import com.example.together.event.EventImage;
-import com.example.together.util.ImageDownloader;
 import com.example.together.viewmodel.PhotoScreenVm;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -7,7 +7,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
@@ -16,23 +15,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.together.data.EventPreview;
 import com.example.together.data.EventPreviewAdapter;
 import com.example.together.event.Event;
 import com.example.together.network.ApiClient;
-import com.example.together.network.service.EventService;
 import com.example.together.network.response.EventResponse;
+import com.example.together.network.service.EventService;
+import com.example.together.user.User;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -50,26 +47,38 @@ public class EventListActivity extends AppCompatActivity {
     private CompositeDisposable disposable = new CompositeDisposable();
     private EventResponse eventResponse;
     private EventPreviewAdapter adapter;
+    private Gson gson;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
 
+        /* Capture Intent */
+        gson = new Gson();
+        Intent intent = getIntent();
+        String json = intent.getStringExtra("userObject");
+        user = gson.fromJson(json, User.class);
+
         // Setting listeners for the bottom navigation bar
         menu = findViewById(R.id.eventListMenu);
         menu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Intent intent;
+                Intent putIntent;
                 switch(menuItem.getItemId()) {
                     case R.id.createEvent:
-                        intent = new Intent(getApplicationContext(), CreateEventActivity.class);
-                        startActivity(intent);
+                        putIntent = new Intent(getApplicationContext(), CreateEventActivity.class);
+                        String json = gson.toJson(user);
+                        putIntent.putExtra("userObject", json);
+                        startActivity(putIntent);
                         return true;
                     case R.id.joinEvent:
-                        intent = new Intent (getApplicationContext(), JoinEventActivity.class);
-                        startActivity(intent);
+                        putIntent = new Intent (getApplicationContext(), JoinEventActivity.class);
+                        String userJson = gson.toJson(user);
+                        putIntent.putExtra("userObject", userJson);
+                        startActivity(putIntent);
                         return true;
                     default:
                         return false;
@@ -89,7 +98,7 @@ public class EventListActivity extends AppCompatActivity {
         previewList = new ArrayList<>();
 
         // Creating RecyclerView adapter
-        adapter = new EventPreviewAdapter(this, previewList);
+        adapter = new EventPreviewAdapter(this, previewList, user);
 
         // Setting the adapter to RecyclerView
         mRecyclerView.setAdapter(adapter);
@@ -107,7 +116,7 @@ public class EventListActivity extends AppCompatActivity {
 
     private void getEvents() {
         disposable.add(
-                eventService.getEvents()
+                eventService.getEventsByUserId(this.user.getId())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(new DisposableSingleObserver<EventResponse>() {
@@ -118,7 +127,6 @@ public class EventListActivity extends AppCompatActivity {
                                 createEventList(eventResponse.getResponse());
                                 adapter.setEventList(eventResponse.getResponse());
                                 adapter.notifyDataSetChanged();
-                                //Check response
                             }
 
                             @Override

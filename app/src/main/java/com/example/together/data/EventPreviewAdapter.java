@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.together.EventInfoActivity;
 import com.example.together.R;
 import com.example.together.event.Event;
+import com.example.together.user.User;
 import com.example.together.util.IntegerOnClickListener;
 import com.google.gson.Gson;
 
@@ -38,16 +39,21 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
     private List<Event> eventList;
 
     List<EventPreview> itemsPendingRemoval;
-    boolean undoOn = true;
+    private boolean undoOn = true;
+
+    private User user;
+    private Gson gson;
 
     private Handler handler = new Handler(); // hanlder for running delayed runnables
     HashMap<EventPreview, Runnable> pendingRunnables = new HashMap<>(); // map of items to pending runnables, so we can cancel a removal if need be
 
     //getting the context and product list with constructor
-    public EventPreviewAdapter(Context mCtx, List<EventPreview> previewList) {
+    public EventPreviewAdapter(Context mCtx, List<EventPreview> previewList, User user) {
         this.mCtx = mCtx;
         this.previewList = previewList;
         itemsPendingRemoval = new ArrayList<>();
+        this.user = user;
+        this.gson = new Gson();
     }
 
     public boolean isUndoOn() {
@@ -109,10 +115,9 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
                 int index = this.getIndex();
                 Intent intent = new Intent(mCtx, EventInfoActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                Gson gson = new Gson();
                 String eventJson = gson.toJson(eventList.get(index));
-
+                String userJson = gson.toJson(user);
+                intent.putExtra("userObject", userJson);
                 intent.putExtra("eventObject", eventJson);
                 mCtx.startActivity(intent);
             }
