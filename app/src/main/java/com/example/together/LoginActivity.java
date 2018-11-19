@@ -11,10 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.together.network.ApiClient;
 import com.example.together.network.response.EventImageResponse;
+import com.example.together.network.response.EventResponse;
 import com.example.together.network.response.UserResponse;
 import com.example.together.network.service.EventImageService;
+import com.example.together.network.service.EventService;
 import com.example.together.network.service.UserService;
+import com.google.gson.Gson;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -61,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
+
+        userService = ApiClient.getClient(getApplicationContext()).create(UserService.class);
+
     }
 
     public void login() {
@@ -81,17 +88,25 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
+        disposable.add(
+                userService.verifyLogin(email, password)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                            @Override
+                            public void onSuccess(UserResponse userResponse) {
+                                onLoginSuccess(userResponse);
+                                progressDialog.dismiss();
+                            }
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+                            @Override
+                            public void onError(Throwable e) {
+                                _passwordText.setError("Email or password is incorrect");
+                                onLoginFailed();
+                                progressDialog.dismiss();
+                            }
+                        })
+        );
     }
 
 
@@ -113,9 +128,13 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
+    public void onLoginSuccess(UserResponse userResponse) {
         _loginButton.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Gson gson = new Gson();
+        String json = gson.toJson(userResponse.getResponse().get(0));
+
+        intent.putExtra("userObject", json);
         startActivity(intent);
         finish();
     }
@@ -140,13 +159,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (password.isEmpty() || password.length() < 7 || password.length() > 25) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+            _passwordText.setError("between 7 and 25 alphanumeric characters");
             valid = false;
         } else {
             _passwordText.setError(null);
         }
 
         return valid;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 
    /* private void getUser() {
