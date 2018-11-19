@@ -22,7 +22,11 @@ public interface UserService {
     @POST("api/user/login")
     Single<UserResponse> verifyLogin(@Field("email") String email, @Field("password") String password);
 
-   /* @GET("api/user/{id}")
+    @FormUrlEncoded
+    @POST("api/user/addUser")
+    Single<UserResponse> addUser(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+
+    /* @GET("api/user/{id}")
     Call<UserResponse> getUserById(@Path("id") int id);*/
 
     /*@GET("group/{id}/users")

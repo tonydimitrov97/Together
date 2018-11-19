@@ -1,6 +1,7 @@
 package com.example.together;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.together.network.ApiClient;
+import com.example.together.network.response.UserResponse;
+import com.example.together.network.service.UserService;
+import com.google.gson.Gson;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
@@ -18,6 +29,9 @@ public class SignUpActivity extends AppCompatActivity {
     EditText _passwordText;
     Button _signupButton;
     TextView _loginLink;
+    private UserResponse userResponse;
+    private UserService userService;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +58,8 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        userService = ApiClient.getClient(getApplicationContext()).create(UserService.class);
     }
 
     public void signup() {
@@ -65,29 +81,41 @@ public class SignUpActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own signup logic here.
+        disposable.add(
+                userService.addUser(name, email, password)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                            @Override
+                            public void onSuccess(UserResponse userResponse) {
+                                onSignupSuccess(userResponse);
+                                progressDialog.dismiss();
+                            }
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println("Fuck" + e.getMessage());
+                                onSignupFailed();
+                                progressDialog.dismiss();
+                            }
+                        })
+        );
     }
 
 
-    public void onSignupSuccess() {
+    public void onSignupSuccess(UserResponse userResponse) {
         _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Gson gson = new Gson();
+        String json = gson.toJson(userResponse.getResponse().get(0));
+
+        intent.putExtra("userObject", json);
+        startActivity(intent);
         finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Email already in use", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
@@ -113,14 +141,20 @@ public class SignUpActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 7 || password.length() > 25) {
+            _passwordText.setError("between 7 and 25 alphanumeric characters");
             valid = false;
         } else {
             _passwordText.setError(null);
         }
 
         return valid;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }
 
