@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
 import com.example.together.configuration.Configuration;
-import com.example.together.util.CustomOnClickListener;
+import com.example.together.util.IntegerOnClickListener;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
@@ -46,7 +46,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         this.imageLoader.displayImage(Configuration.SERVER_IP + "images/" + galleryList.get(i).getPath(), viewHolder.img);
 
         /* Make it so clicking a photo goes to photo view */
-        viewHolder.img.setOnClickListener(new CustomOnClickListener(i) {
+        viewHolder.img.setOnClickListener(new IntegerOnClickListener(i) {
             public void onClick(View v) {
                 int index = this.getIndex();
                 Intent intent = new Intent(context, PhotoScreenActivity.class);

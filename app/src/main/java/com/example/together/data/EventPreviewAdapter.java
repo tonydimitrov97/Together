@@ -1,6 +1,5 @@
 package com.example.together.data;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,10 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.together.EventInfoActivity;
-import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
 import com.example.together.event.Event;
-import com.example.together.util.CustomOnClickListener;
+import com.example.together.util.IntegerOnClickListener;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -59,7 +57,7 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
         holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(preview.getImage()));
 
         /* When an event is clicked, pass the data to the event screen and start the activity */
-        holder.itemView.setOnClickListener(new CustomOnClickListener(position) {
+        holder.itemView.setOnClickListener(new IntegerOnClickListener(position) {
             public void onClick(View v) {
                 int index = this.getIndex();
                 Intent intent = new Intent(mCtx, EventInfoActivity.class);
