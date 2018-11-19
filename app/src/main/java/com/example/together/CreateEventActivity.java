@@ -1,8 +1,6 @@
 package com.example.together;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,17 +9,13 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 import com.example.together.network.ApiClient;
-import com.example.together.network.response.EventImageResponse;
 import com.example.together.network.response.EventResponse;
-import com.example.together.network.service.EventImageService;
 import com.example.together.network.service.EventService;
 
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.http.Field;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -40,7 +34,7 @@ public class CreateEventActivity extends AppCompatActivity {
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addEvent();
+                createEvent();
             }
         });
     }
@@ -53,7 +47,7 @@ public class CreateEventActivity extends AppCompatActivity {
         return true;
     }
 
-    private void addEvent() {
+    private void createEvent() {
 
         String title = ((EditText)findViewById(R.id.eventTitleInput)).getText().toString();
         String start_date = ((EditText)findViewById(R.id.startDateInput)).getText().toString();
