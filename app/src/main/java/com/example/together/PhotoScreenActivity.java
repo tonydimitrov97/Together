@@ -35,7 +35,7 @@ public class PhotoScreenActivity extends AppCompatActivity {
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(PhotoScreenActivity.this));
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(Configuration.SERVER_IP + eventImage.getPath(), (ImageView) findViewById(R.id.photoScreenImage));
+        imageLoader.displayImage(Configuration.SERVER_IP + "images/" + eventImage.getPath(), (ImageView) findViewById(R.id.photoScreenImage));
 
         ImageButton likeButton = findViewById(R.id.likeButton);
         likeButton.setOnClickListener(new View.OnClickListener() {
