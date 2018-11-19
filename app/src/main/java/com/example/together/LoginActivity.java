@@ -1,10 +1,10 @@
 package com.example.together;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.together.network.ApiClient;
-import com.example.together.network.response.EventImageResponse;
-import com.example.together.network.response.EventResponse;
 import com.example.together.network.response.UserResponse;
-import com.example.together.network.service.EventImageService;
-import com.example.together.network.service.EventService;
 import com.example.together.network.service.UserService;
 import com.google.gson.Gson;
 
@@ -36,12 +32,15 @@ public class LoginActivity extends AppCompatActivity {
     private UserService userService;
     private UserResponse userResponse;
     private CompositeDisposable disposable = new CompositeDisposable();
+    private Gson gson;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        gson = new Gson();
 
         _emailText = findViewById(R.id.input_email);
         _passwordText = findViewById(R.id.input_password);
@@ -131,9 +130,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess(UserResponse userResponse) {
         _loginButton.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        Gson gson = new Gson();
         String json = gson.toJson(userResponse.getResponse().get(0));
-
         intent.putExtra("userObject", json);
         startActivity(intent);
         finish();

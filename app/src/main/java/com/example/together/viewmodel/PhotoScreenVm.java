@@ -1,7 +1,9 @@
 package com.example.together.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
+
 import com.example.together.event.EventImage;
+
 import java.util.Random;
 
 public class PhotoScreenVm extends ViewModel {

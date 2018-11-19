@@ -2,15 +2,16 @@ package com.example.together;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.databinding.DataBindingUtil;
 import android.view.View;
+
 import com.example.together.databinding.ActivityEventInfoBinding;
 import com.example.together.event.Event;
 import com.example.together.event.GalleryAdapter;
@@ -19,10 +20,12 @@ import com.example.together.network.response.EventImageResponse;
 import com.example.together.network.response.UserEventMapResponse;
 import com.example.together.network.service.EventImageService;
 import com.example.together.network.service.UserEventMapService;
+import com.example.together.user.User;
 import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -39,6 +42,8 @@ public class EventInfoActivity extends AppCompatActivity {
     private EventInfoVm eventInfoVm;
     private Event event;
     ActivityEventInfoBinding binding;
+    private Gson gson;
+    private User user;
 
     @SuppressLint("CheckResult")
     @Override
@@ -46,9 +51,12 @@ public class EventInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         /* Capture Intent */
-        Intent intent = getIntent();
-        String json = intent.getStringExtra("eventObject");
-        event = new Gson().fromJson(json, Event.class);
+        gson = new Gson();
+        Intent getIntent = getIntent();
+        String eventJson = getIntent.getStringExtra("eventObject");
+        String userJson = getIntent.getStringExtra("userObject");
+        event = gson.fromJson(eventJson, Event.class);
+        user = gson.fromJson(userJson, User.class);
 
         /* Get all images for event */
         eventImageService = ApiClient.getClient(getApplicationContext()).create(EventImageService.class);
@@ -85,15 +93,15 @@ public class EventInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), EventSettingsActivity.class);
 
-                Gson gson = new Gson();
-                String json = gson.toJson(event);
-
-                intent.putExtra("eventObject", json);
+                String eventJson = gson.toJson(event);
+                String userJson = gson.toJson(user);
+                intent.putExtra("eventObject", eventJson);
+                intent.putExtra("userObject", userJson);
                 startActivity(intent);
             }
         });
 
-        adapter = new GalleryAdapter(getApplicationContext(), eventInfoVm.getEventGallery(), width, imageLoader);
+        adapter = new GalleryAdapter(getApplicationContext(), eventInfoVm.getEventGallery(), width, imageLoader, user);
         recyclerView.setAdapter(adapter);
 
     }

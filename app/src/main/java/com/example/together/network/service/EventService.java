@@ -23,4 +23,7 @@ public interface EventService {
                     @Field("location") String location, @Field("creatorId") int creatorId, @Field("description") String description,
                     @Field("public") boolean _public);
 
+    @GET("api/event/userEvent/{userId}")
+    Single<EventResponse> getEventsByUserId(@Path("userId") int userId);
+
 }

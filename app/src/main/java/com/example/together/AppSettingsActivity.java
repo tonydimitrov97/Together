@@ -1,7 +1,7 @@
 package com.example.together;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.KeyEvent;
 
 public class AppSettingsActivity extends Activity {

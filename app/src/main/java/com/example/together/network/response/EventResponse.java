@@ -1,10 +1,10 @@
 package com.example.together.network.response;
 
-import java.util.List;
-
 import com.example.together.event.Event;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class EventResponse {
 

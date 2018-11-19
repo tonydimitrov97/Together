@@ -1,6 +1,7 @@
 package com.example.together.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
+
 import com.example.together.event.Event;
 
 public class EventSettingsVm extends ViewModel {
