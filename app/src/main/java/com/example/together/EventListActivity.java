@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +18,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.example.together.data.EventPreview;
 import com.example.together.data.EventPreviewAdapter;
 import com.example.together.event.Event;
@@ -26,10 +26,10 @@ import com.example.together.network.response.EventResponse;
 import com.example.together.network.service.EventService;
 import com.example.together.user.User;
 import com.google.gson.Gson;
-
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -97,8 +97,11 @@ public class EventListActivity extends AppCompatActivity {
         // Initializing the event preview list
         previewList = new ArrayList<>();
 
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(EventListActivity.this));
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
         // Creating RecyclerView adapter
-        adapter = new EventPreviewAdapter(this, previewList, user);
+        adapter = new EventPreviewAdapter(this, previewList, user, imageLoader);
 
         // Setting the adapter to RecyclerView
         mRecyclerView.setAdapter(adapter);
@@ -146,7 +149,11 @@ public class EventListActivity extends AppCompatActivity {
                             eventList.get(i).getEventCode(),
                             eventList.get(i).getTitle(),
                             getShortDescription(eventList.get(i).getDescription()),
-                            R.drawable.test
+                            R.drawable.test,
+                            eventList.get(i).getThumbnail(),
+                            eventList.get(i).getPublic(),
+                            eventList.get(i).getId(),
+                            eventList.get(i).getCreatorId()
                     )
             );
         }
