@@ -11,6 +11,7 @@
         android:id="@+id/eventTitleInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="#ffffff"
@@ -103,7 +104,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="#ffffff"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/InviteUsersButton"
@@ -118,7 +120,8 @@
         android:theme="@style/Widget.AppCompat.Button.Colored"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/privacySwitch" />
+        app:layout_constraintTop_toBottomOf="@+id/privacySwitch"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/descriptionInput"
