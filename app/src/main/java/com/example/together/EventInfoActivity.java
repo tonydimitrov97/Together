@@ -15,9 +15,9 @@ import com.example.together.databinding.ActivityEventInfoBinding;
 import com.example.together.event.Event;
 import com.example.together.event.GalleryAdapter;
 import com.example.together.network.ApiClient;
-import com.example.together.network.response.EventImageResponse;
+import com.example.together.network.response.PhotoResponse;
 import com.example.together.network.response.UserEventMapResponse;
-import com.example.together.network.service.EventImageService;
+import com.example.together.network.service.PhotoService;
 import com.example.together.network.service.UserEventMapService;
 import com.example.together.user.User;
 import com.example.together.viewmodel.EventInfoVm;
@@ -32,9 +32,9 @@ import io.reactivex.schedulers.Schedulers;
 public class EventInfoActivity extends AppCompatActivity {
 
     private GalleryAdapter adapter;
-    private EventImageService eventImageService;
+    private PhotoService photoService;
     private CompositeDisposable disposable = new CompositeDisposable();
-    private EventImageResponse eventImageResponse;
+    private PhotoResponse photoResponse;
     private UserEventMapResponse userEventMapResponse;
     private UserEventMapService userEventMapService;
     private EventInfoVm eventInfoVm;
@@ -58,7 +58,7 @@ public class EventInfoActivity extends AppCompatActivity {
         user = gson.fromJson(userJson, User.class);
 
         /* Get all images for event */
-        eventImageService = ApiClient.getClient(getApplicationContext()).create(EventImageService.class);
+        photoService = ApiClient.getClient(getApplicationContext()).create(PhotoService.class);
         getImages(event.getId());
 
         /* Setup view model and data binding */
@@ -129,18 +129,18 @@ public class EventInfoActivity extends AppCompatActivity {
 
     private void getImages(int eventId) {
         disposable.add(
-                eventImageService.getPhotosByEventId(eventId)
+                photoService.getPhotosByEventId(eventId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new DisposableSingleObserver<EventImageResponse>() {
+                        .subscribeWith(new DisposableSingleObserver<PhotoResponse>() {
 
                             @Override
-                            public void onSuccess(EventImageResponse image) {
-                                eventImageResponse = image;
-                                eventInfoVm.setEventGallery(eventImageResponse.getResponse());
-                                adapter.setGalleryList(eventImageResponse.getResponse());
+                            public void onSuccess(PhotoResponse image) {
+                                photoResponse = image;
+                                eventInfoVm.setEventGallery(photoResponse.getResponse());
+                                adapter.setGalleryList(photoResponse.getResponse());
                                 adapter.notifyDataSetChanged();
-                                updatePhotoCount(eventImageResponse.getResponse().size());
+                                updatePhotoCount(photoResponse.getResponse().size());
                             }
 
                             @Override
