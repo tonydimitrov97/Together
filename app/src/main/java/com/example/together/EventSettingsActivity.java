@@ -21,7 +21,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
 public class EventSettingsActivity extends AppCompatActivity {
 
@@ -117,10 +116,10 @@ public class EventSettingsActivity extends AppCompatActivity {
                 eventService.deleteEvent(event.getId())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new DisposableSingleObserver<Response>() {
+                        .subscribeWith(new DisposableSingleObserver<EventResponse>() {
 
                             @Override
-                            public void onSuccess(Response response) {
+                            public void onSuccess(EventResponse response) {
                                 goBackToEventList();
                                 System.out.println("Successfully deleted event.");
                             }

@@ -1,21 +1,14 @@
 package com.example.together.network.service;
 
 import com.example.together.network.response.EventResponse;
-import com.example.together.network.response.UserEventMapResponse;
-
 import io.reactivex.Single;
-import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
-
 public interface EventService {
 
     @GET("api/event")
@@ -50,8 +43,7 @@ public interface EventService {
                                       @Field("thumbnail") String thumbnail,
                                       @Field("eventCode") String eventCode);
 
-    @FormUrlEncoded
-    @HTTP(method = "DELETE", path = "/api/event", hasBody = true)
-    Single<Response> deleteEvent(@Field("eventId") int eventId);
+    @HTTP(method = "DELETE", path = "/api/event/{eventId}", hasBody = true)
+    Single<EventResponse> deleteEvent(@Path("eventId") int eventId);
 
 }
