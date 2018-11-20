@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
-
 import com.example.together.databinding.ActivityEventInfoBinding;
 import com.example.together.event.Event;
 import com.example.together.event.GalleryAdapter;
@@ -25,7 +24,6 @@ import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -44,6 +42,7 @@ public class EventInfoActivity extends AppCompatActivity {
     ActivityEventInfoBinding binding;
     private Gson gson;
     private User user;
+    private ImageLoader imageLoader;
 
     @SuppressLint("CheckResult")
     @Override
@@ -83,7 +82,7 @@ public class EventInfoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(EventInfoActivity.this));
-        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader = ImageLoader.getInstance();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -100,6 +99,10 @@ public class EventInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if(!event.getCreatorId().equals(user.getId())) {
+            myToolbar.findViewById(R.id.eventSettingsButton).setVisibility(View.GONE);
+        }
 
         adapter = new GalleryAdapter(getApplicationContext(), eventInfoVm.getEventGallery(), width, imageLoader, user);
         recyclerView.setAdapter(adapter);
@@ -173,5 +176,6 @@ public class EventInfoActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         disposable.dispose();
+        imageLoader.destroy();
     }
 }

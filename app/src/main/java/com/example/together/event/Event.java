@@ -25,10 +25,10 @@ public class Event {
     private Integer creatorId;
     @SerializedName("start_date")
     @Expose
-    private String startDate;
+    private String start_date;
     @SerializedName("end_date")
     @Expose
-    private String endDate;
+    private String end_date;
     @SerializedName("public")
     @Expose
     private Integer _public;
@@ -46,7 +46,7 @@ public class Event {
     /**
      *
      * @param id
-     * @param startDate
+     * @param start_date
      * @param title
      * @param thumbnail
      * @param _public
@@ -54,10 +54,10 @@ public class Event {
      * @param description
      * @param creatorId
      * @param eventCode
-     * @param endDate
+     * @param end_date
      */
     public Event(Integer id, String title, String eventCode, String description, String location,
-                 Integer creatorId, String startDate, String endDate, Integer _public, String thumbnail) {
+                 Integer creatorId, String start_date, String end_date, Integer _public, String thumbnail) {
         super();
         this.id = id;
         this.title = title;
@@ -65,8 +65,8 @@ public class Event {
         this.description = description;
         this.location = location;
         this.creatorId = creatorId;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.start_date = start_date;
+        this.end_date = end_date;
         this._public = _public;
         this.thumbnail = thumbnail;
     }
@@ -119,20 +119,20 @@ public class Event {
         this.creatorId = creatorId;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getStart_date() {
+        return start_date;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEnd_date() {
+        return end_date;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
     public Integer getPublic() {

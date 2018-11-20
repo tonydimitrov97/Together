@@ -1,11 +1,12 @@
 package com.example.together.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
-
 import com.example.together.event.Event;
 import com.example.together.event.EventImage;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EventInfoVm extends ViewModel {
@@ -17,6 +18,8 @@ public class EventInfoVm extends ViewModel {
     private int userCount;
     private List<EventImage> eventGallery;
     private int photoCount;
+    private String startDate;
+    private String endDate;
 
     public EventInfoVm(Event event) {
         this.userCount = 1;
@@ -25,6 +28,8 @@ public class EventInfoVm extends ViewModel {
         this.eventDescription = event.getDescription();
         this.eventLocation = event.getLocation();
         this.eventGallery = new ArrayList<EventImage>();
+        this.startDate = event.getStart_date();
+        this.endDate = event.getEnd_date();
     }
 
     public void setUserCount(int userCount) {
@@ -65,5 +70,24 @@ public class EventInfoVm extends ViewModel {
 
     public int getPhotoCount() {
         return photoCount;
+    }
+
+    public String getDates() {
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(this.startDate);
+            Date newStartDate = format.parse(this.startDate);
+            Date newEndDate = format.parse(this.endDate);
+            format = new SimpleDateFormat("MM/dd/yyyy");
+            String newStartDate1 = format.format(newStartDate);
+            String newEndDate1 = format.format(newEndDate);
+
+            return newStartDate1 + "   -   " + newEndDate1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
