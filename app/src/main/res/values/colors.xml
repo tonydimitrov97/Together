@@ -6,4 +6,5 @@
     <color name="defaultTextColor">#252525</color>
     <color name="foreground_material_light">#000000</color>
     <color name="delete_red">#be3737</color>
+    <color name="current_event">#63e457</color>
 </resources>

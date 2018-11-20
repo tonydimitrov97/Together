@@ -113,5 +113,7 @@
     <string name="create_event_button">Create Event</string>
     <string name="picture_taken">Picture Taken</string>
     <string name="create_event_description">Description</string>
+    <string name="error_removing_creator">You cannot remove yourself from an event that you have created.\n
+                                           To delete the event, please do so through the event settings.</string>
 
 </resources>

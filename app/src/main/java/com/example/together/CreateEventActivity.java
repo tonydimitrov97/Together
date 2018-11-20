@@ -45,7 +45,7 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EventListActivity.eventListActivity.finish();
-                addEvent();
+                createEvent();
                 Intent putIntent = new Intent(getApplicationContext(), EventListActivity.class);
                 String json = gson.toJson(user);
                 putIntent.putExtra("userObject", json);
@@ -63,7 +63,7 @@ public class CreateEventActivity extends AppCompatActivity {
         return true;
     }
 
-    private void addEvent() {
+    private void createEvent() {
 
         String title = ((EditText)findViewById(R.id.eventTitleInput)).getText().toString();
         String start_date = ((EditText)findViewById(R.id.startDateInput)).getText().toString();
