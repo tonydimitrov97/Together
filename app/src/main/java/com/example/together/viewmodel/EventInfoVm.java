@@ -28,8 +28,8 @@ public class EventInfoVm extends ViewModel {
         this.eventDescription = event.getDescription();
         this.eventLocation = event.getLocation();
         this.eventGallery = new ArrayList<EventImage>();
-        this.startDate = event.getStartDate();
-        this.endDate = event.getEndDate();
+        this.startDate = event.getStart_date();
+        this.endDate = event.getEnd_date();
     }
 
     public void setUserCount(int userCount) {
@@ -75,10 +75,11 @@ public class EventInfoVm extends ViewModel {
     public String getDates() {
 
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(this.startDate);
             Date newStartDate = format.parse(this.startDate);
             Date newEndDate = format.parse(this.endDate);
-            format = new SimpleDateFormat("MM/dd/YYYY");
+            format = new SimpleDateFormat("MM/dd/yyyy");
             String newStartDate1 = format.format(newStartDate);
             String newEndDate1 = format.format(newEndDate);
 

@@ -42,6 +42,7 @@ public class EventInfoActivity extends AppCompatActivity {
     ActivityEventInfoBinding binding;
     private Gson gson;
     private User user;
+    private ImageLoader imageLoader;
 
     @SuppressLint("CheckResult")
     @Override
@@ -81,7 +82,7 @@ public class EventInfoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(EventInfoActivity.this));
-        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader = ImageLoader.getInstance();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -92,7 +93,9 @@ public class EventInfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), EventSettingsActivity.class);
 
                 String eventJson = gson.toJson(event);
+                String userJson = gson.toJson(user);
                 intent.putExtra("eventObject", eventJson);
+                intent.putExtra("userObject", userJson);
                 startActivity(intent);
             }
         });
@@ -173,5 +176,6 @@ public class EventInfoActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         disposable.dispose();
+        imageLoader.destroy();
     }
 }

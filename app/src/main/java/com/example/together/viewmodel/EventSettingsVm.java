@@ -12,8 +12,8 @@ public class EventSettingsVm extends ViewModel {
     private String eventTitle;
     private String eventDescription;
     private String eventLocation;
-    private String startDate;
-    private String endDate;
+    private String start_date;
+    private String end_date;
     private int _public;
 
     public EventSettingsVm(Event event) {
@@ -21,16 +21,16 @@ public class EventSettingsVm extends ViewModel {
         this.eventTitle = event.getTitle();
         this.eventDescription = event.getDescription();
         this.eventLocation = event.getLocation();
-        this.startDate = event.getStartDate();
-        this.endDate = event.getEndDate();
+        this.start_date = event.getStart_date();
+        this.end_date = event.getEnd_date();
         this._public = event.getPublic();
     }
 
-    public String getEndDate() {
+    public String getEnd_date() {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-            Date currentEndDate = format.parse(this.endDate);
-            format = new SimpleDateFormat("YYYY-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date currentEndDate = format.parse(this.end_date);
+            format = new SimpleDateFormat("yyyy-MM-dd");
             String newEndDate = format.format(currentEndDate);
             return newEndDate;
         } catch (ParseException e) {
@@ -40,11 +40,11 @@ public class EventSettingsVm extends ViewModel {
         return null;
     }
 
-    public String getStartDate() {
+    public String getStart_date() {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-            Date currentStartDate = format.parse(this.startDate);
-            format = new SimpleDateFormat("YYYY-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date currentStartDate = format.parse(this.start_date);
+            format = new SimpleDateFormat("yyyy-MM-dd");
             String newStartDate = format.format(currentStartDate);
             return newStartDate;
         } catch (ParseException e) {
