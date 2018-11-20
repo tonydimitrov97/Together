@@ -1,145 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/edit_eventTitleLabel"
-        android:layout_width="97dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Event Title:"
-        android:textAlignment="textEnd"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_eventTitleInput"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:theme="@style/JoinCreateEventTheme">
 
     <EditText
-        android:id="@+id/edit_eventTitleInput"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Title"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_eventTitleLabel"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/edit_dateRangeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Date Range:"
-        android:textAlignment="textEnd"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_startDateInput"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/edit_startDateInput"
-        android:layout_width="109dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Start"
-        android:inputType="date"
-        app:layout_constraintEnd_toStartOf="@+id/edit_endDateInput"
-        app:layout_constraintStart_toEndOf="@+id/edit_dateRangeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/edit_eventTitleInput" />
-
-    <EditText
-        android:id="@+id/edit_endDateInput"
-        android:layout_width="114dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="End"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_startDateInput"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/edit_locationLabel"
-        android:layout_width="97dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:gravity="right"
-        android:text="Location:"
-        android:textAlignment="textEnd"
-        android:textAllCaps="false"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_locationInput"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/edit_locationInput"
-        android:layout_width="231dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Minneapolis, MN"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_locationLabel"
-        app:layout_constraintTop_toBottomOf="@+id/edit_endDateInput" />
-
-    <TextView
-        android:id="@+id/edit_privacyLabel"
-        android:layout_width="95dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Privacy:"
-        android:textAlignment="textEnd"
-        android:textColor="@color/defaultTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_privacySwitch"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Switch
-        android:id="@+id/edit_privacySwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Public"
-        app:layout_constraintStart_toStartOf="@+id/edit_locationInput"
-        app:layout_constraintTop_toBottomOf="@+id/edit_locationInput" />
-
-
-    <Button
-        android:id="@+id/deleteEventButton"
-        style="@android:style/Widget.Material.Light.Button.Small"
+        android:id="@+id/eventTitleInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:backgroundTint="@android:color/background_light"
-        android:text="Delete Event"
-        android:textAllCaps="false"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#ffffff"
+        android:ems="10"
+        android:hint="@string/create_event_title_input"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:style="@style/Theme.App.Base" />
+
+    <EditText
+        android:id="@+id/startDateInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/create_event_start_date_input"
+        android:inputType="date"
+        app:layout_constraintEnd_toStartOf="@+id/endDateInput"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventTitleInput"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff" />
+
+    <EditText
+        android:id="@+id/endDateInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/create_event_end_date_input"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="@+id/startDateInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/startDateInput"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff"/>
+
+    <EditText
+        android:id="@+id/locationInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/create_event_location_input"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endDateInput"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        android:backgroundTint="#ffffff"/>
+
+    <Switch
+        android:id="@+id/privacySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#ffffff"
+        android:text="@string/create_event_switch"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
+
+    <Button
+        android:id="@+id/updateEventButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="88dp"
+        android:background="#ffffff"
+        android:textStyle="bold"
+        android:text="Update Event"
+        android:textColor="@color/colorPrimary"
+        android:theme="@style/Widget.AppCompat.Button.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:theme="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/deleteEventButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="28dp"
+        android:textStyle="bold"
+        android:text="Delete Event"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#be3737"
+        android:textColor="#ffffff"/>
+
+    <Button
+        android:id="@+id/InviteUsersButton"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:background="#ffffff"
+        android:textStyle="bold"
+        android:text="@string/create_event_invite_users"
+        android:textColor="@color/colorPrimary"
+        android:theme="@style/Widget.AppCompat.Button.Colored"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/privacySwitch" />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#ffffff"
+        android:ems="10"
+        android:hint="@string/create_event_description"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationInput" />
 
 </android.support.constraint.ConstraintLayout>
