@@ -15,8 +15,15 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.together.configuration.Configuration;
+import com.example.together.event.Event;
+import com.example.together.network.ApiClient;
+import com.example.together.network.response.EventResponse;
+import com.example.together.network.response.UserResponse;
+import com.example.together.network.service.EventService;
+import com.example.together.network.service.UserService;
 import com.example.together.user.User;
 import com.google.android.cameraview.CameraView;
 import com.google.gson.Gson;
@@ -25,6 +32,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import cz.msebera.android.httpclient.Header;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     CameraView mCameraView = null;
@@ -39,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog prgDialog;
     Gson gson;
     RequestParams params = new RequestParams();
+    private String currentEvent;
+    private EventService eventService;
+    private CompositeDisposable disposable = new CompositeDisposable();
+
 
     private static final int[] FLASH_OPTIONS = {
             CameraView.FLASH_OFF,
@@ -72,6 +87,26 @@ public class MainActivity extends AppCompatActivity {
         prgDialog = new ProgressDialog(this);
         prgDialog.setCancelable(false);
 
+        eventService = ApiClient.getClient(getApplicationContext()).create(EventService.class);
+
+        disposable.add(
+                eventService.getEventById(user.getActiveEvent())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<EventResponse>() {
+                            @Override
+                            public void onSuccess(EventResponse eventResponse) {
+                                currentEvent = gson.toJson(eventResponse.getResponse().get(0));
+                                TextView currentEventText = findViewById(R.id.currentEventText);
+                                currentEventText.setText(gson.fromJson(currentEvent, Event.class).getTitle());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+                        })
+        );
 
         eventInfoView = findViewById(R.id.eventInfo);
         eventInfoView.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), EventInfoActivity.class);
                 String userJson = gson.toJson(user);
                 intent.putExtra("userObject", userJson);
+                intent.putExtra("eventObject", currentEvent);
                 v.getContext().startActivity(intent);
             }
         });
@@ -119,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                 mCameraView.setFlash(FLASH_OPTIONS[mCurrentFlash]);
             }
         });
-
     }
 
     @Override
@@ -153,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
             }
             mBackgroundHandler = null;
         }
+        disposable.dispose();
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {

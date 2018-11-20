@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         userService = ApiClient.getClient(getApplicationContext()).create(UserService.class);
-
     }
 
     public void login() {
