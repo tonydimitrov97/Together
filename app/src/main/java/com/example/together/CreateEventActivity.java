@@ -8,13 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
-
 import com.example.together.network.ApiClient;
 import com.example.together.network.response.EventResponse;
 import com.example.together.network.service.EventService;
 import com.example.together.user.User;
 import com.google.gson.Gson;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -39,15 +37,16 @@ public class CreateEventActivity extends AppCompatActivity {
         String json = getIntent.getStringExtra("userObject");
         user = gson.fromJson(json, User.class);
 
-        Button createEventButton = (Button)findViewById(R.id.createEventButton);
+        Button createEventButton = findViewById(R.id.createEventButton);
 
         eventService = ApiClient.getClient(getApplicationContext()).create(EventService.class);
 
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventListActivity.eventListActivity.finish();
                 createEvent();
-                Intent putIntent = new Intent();
+                Intent putIntent = new Intent(getApplicationContext(), EventListActivity.class);
                 String json = gson.toJson(user);
                 putIntent.putExtra("userObject", json);
                 startActivity(putIntent);
