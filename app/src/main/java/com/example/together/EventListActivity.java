@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -65,6 +66,9 @@ public class EventListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String json = intent.getStringExtra("userObject");
         user = gson.fromJson(json, User.class);
+
+        Toolbar toolbar = findViewById(R.id.event_list_toolbar);
+        toolbar.setTitle(user.getName() + "'s Events");
 
         // Setting listeners for the bottom navigation bar
         menu = findViewById(R.id.eventListMenu);

@@ -248,7 +248,6 @@ public class MainActivity extends AppCompatActivity {
                         prgDialog.hide();
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         Date date = new Date();
-                        System.out.println("Fuck" + dateFormat.format(date));
                         disposable.add(
                                 photoService.uploadPhoto(event.getId(), user.getId(), event.getLocation(), dateFormat.format(date),
                                 "")
