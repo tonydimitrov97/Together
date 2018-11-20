@@ -1,5 +1,6 @@
 package com.example.together;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -42,6 +43,8 @@ public class EventListActivity extends AppCompatActivity {
     // Used to hold all the event previews
     RecyclerView mRecyclerView;
 
+    public static Activity eventListActivity;
+
     BottomNavigationView menu;
     private EventService eventService;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -54,6 +57,8 @@ public class EventListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
+
+        eventListActivity = this;
 
         /* Capture Intent */
         gson = new Gson();
