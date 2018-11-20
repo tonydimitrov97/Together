@@ -1,30 +1,30 @@
 package com.example.together.network.service;
 
-import com.example.together.network.response.EventImageResponse;
+import com.example.together.network.response.PhotoResponse;
 
 import io.reactivex.Single;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-    public interface EventImageService {
+    public interface PhotoService {
 
         @GET("api/photo")
-        Single<EventImageResponse> getPhotos();
+        Single<PhotoResponse> getPhotos();
 
         @GET("api/photo/{id}")
-        Single<EventImageResponse> getPhotoById(@Path("id") int id);
+        Single<PhotoResponse> getPhotoById(@Path("id") int id);
 
         @GET("api/photo/eventPhotos/{eventId}")
-        Single<EventImageResponse> getPhotosByEventId(@Path("eventId") int eventId);
+        Single<PhotoResponse> getPhotosByEventId(@Path("eventId") int eventId);
 
         @FormUrlEncoded
-        @POST("api/photo/upload")
-        Call<byte[]> uploadPhoto(
-                @Field("image") byte[] data);
+        @POST("api/photo/uploadPhoto")
+        Single<PhotoResponse> uploadPhoto(
+                @Field("eventId") int eventId, @Field("userId") int userId, @Field("location") String location,
+                @Field("date_created") String date, @Field("caption") String caption);
 
     /*@GET("group/{id}/users")
     Call<List<EventResponse>> groupList(@Path("id") int groupId, @Query("sort") String sort);

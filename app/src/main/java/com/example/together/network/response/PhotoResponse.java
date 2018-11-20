@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class EventImageResponse {
+public class PhotoResponse {
 
     @SerializedName("status")
     @Expose
@@ -22,7 +22,7 @@ public class EventImageResponse {
      * No args constructor for use in serialization
      *
      */
-    public EventImageResponse() {
+    public PhotoResponse() {
     }
 
     /**
@@ -31,7 +31,7 @@ public class EventImageResponse {
      * @param error
      * @param status
      */
-    public EventImageResponse(Integer status, Object error, List<EventImage> response) {
+    public PhotoResponse(Integer status, Object error, List<EventImage> response) {
         super();
         this.status = status;
         this.error = error;
