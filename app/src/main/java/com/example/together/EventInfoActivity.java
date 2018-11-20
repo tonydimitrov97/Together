@@ -92,12 +92,14 @@ public class EventInfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), EventSettingsActivity.class);
 
                 String eventJson = gson.toJson(event);
-                String userJson = gson.toJson(user);
                 intent.putExtra("eventObject", eventJson);
-                intent.putExtra("userObject", userJson);
                 startActivity(intent);
             }
         });
+
+        if(!event.getCreatorId().equals(user.getId())) {
+            myToolbar.findViewById(R.id.eventSettingsButton).setVisibility(View.GONE);
+        }
 
         adapter = new GalleryAdapter(getApplicationContext(), eventInfoVm.getEventGallery(), width, imageLoader, user);
         recyclerView.setAdapter(adapter);
