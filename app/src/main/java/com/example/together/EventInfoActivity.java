@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
-
 import com.example.together.databinding.ActivityEventInfoBinding;
 import com.example.together.event.Event;
 import com.example.together.event.GalleryAdapter;
@@ -25,7 +24,6 @@ import com.example.together.viewmodel.EventInfoVm;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
