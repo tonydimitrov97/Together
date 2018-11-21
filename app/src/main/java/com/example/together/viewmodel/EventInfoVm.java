@@ -18,6 +18,8 @@ public class EventInfoVm extends ViewModel {
     private int userCount;
     private List<EventImage> eventGallery;
     private int photoCount;
+    private int publicEvent;
+    private int eventId;
     private String startDate;
     private String endDate;
 
@@ -28,8 +30,18 @@ public class EventInfoVm extends ViewModel {
         this.eventDescription = event.getDescription();
         this.eventLocation = event.getLocation();
         this.eventGallery = new ArrayList<EventImage>();
+        this.publicEvent = event.getPublic();
+        this.eventId = event.getId();
         this.startDate = event.getStart_date();
         this.endDate = event.getEnd_date();
+    }
+
+    public boolean getPublicEvent() {
+        return (publicEvent == 1);
+    }
+
+    public String getEventId() {
+        return "Event ID: " + eventId;
     }
 
     public void setUserCount(int userCount) {
