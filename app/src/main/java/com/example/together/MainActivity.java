@@ -2,6 +2,7 @@ package com.example.together;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -13,31 +14,30 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-
+import android.widget.Spinner;
+import android.widget.Toast;
 import com.example.together.configuration.Configuration;
 import com.example.together.event.Event;
 import com.example.together.network.ApiClient;
 import com.example.together.network.response.EventResponse;
 import com.example.together.network.response.PhotoResponse;
-import com.example.together.network.response.UserResponse;
 import com.example.together.network.service.EventService;
 import com.example.together.network.service.PhotoService;
-import com.example.together.network.service.UserService;
 import com.example.together.user.User;
 import com.google.android.cameraview.CameraView;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -55,13 +55,16 @@ public class MainActivity extends AppCompatActivity {
     private Handler mBackgroundHandler;
     private User user;
     ProgressDialog prgDialog;
+    String currentEvent;
     Gson gson;
     RequestParams params = new RequestParams();
-    private String currentEvent;
     private EventService eventService;
     private PhotoService photoService;
     private CompositeDisposable disposable = new CompositeDisposable();
     private Event event;
+    private ArrayList<String> eventNames;
+    private List<Event> eventList;
+    Spinner eventSwitcher;
 
 
     private static final int[] FLASH_OPTIONS = {
@@ -88,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
         String json = intent.getStringExtra("userObject");
         user = gson.fromJson(json, User.class);
 
+        eventSwitcher = ((Spinner)findViewById(R.id.currentEventSpinner));
+        eventService = ApiClient.getClient(getApplicationContext()).create(EventService.class);
+        getEvents();
+
+
         mCameraView = findViewById(R.id.camera);
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
@@ -106,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         .subscribeWith(new DisposableSingleObserver<EventResponse>() {
                             @Override
                             public void onSuccess(EventResponse eventResponse) {
-                                setEvent(eventResponse);
+                                setEvent(eventResponse.getResponse().get(0));
                             }
 
                             @Override
@@ -293,11 +301,64 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Image Uploaded.");
     }
 
-    public void setEvent(EventResponse eventResponse) {
-        currentEvent = gson.toJson(eventResponse.getResponse().get(0));
-        TextView currentEventText = findViewById(R.id.currentEventText);
-        currentEventText.setText(gson.fromJson(currentEvent, Event.class).getTitle());
-        event = gson.fromJson(currentEvent, Event.class);
+
+    private void getEvents() {
+        disposable.add(
+                eventService.getEventsByUserId(this.user.getId())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<EventResponse>() {
+
+                            @Override
+                            public void onSuccess(EventResponse response) {
+                                setLists(response.getResponse());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println("Error fetching events.");
+                            }
+                        })
+        );
     }
 
+    private void setLists(List<Event> eventList) {
+        this.eventList = eventList;
+        ArrayList<String> namesList = new ArrayList<String>();
+        for(int i = 0; i < eventList.size(); i++) {
+            namesList.add(eventList.get(i).getTitle());
+        }
+        this.eventNames = namesList;
+        setupSpinner();
+    }
+
+    public void setupSpinner() {
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, eventNames);
+
+        eventSwitcher.setAdapter(adp);
+
+        for(int i = 0; i < eventNames.size(); i++) {
+            if(eventList.get(i).getId() == user.getActiveEvent()) {
+                eventSwitcher.setSelection(adp.getPosition(eventList.get(i).getTitle()));
+                break;
+            }
+        }
+
+        eventSwitcher.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long arg3) {
+               setEvent(eventList.get(position));
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+    }
+
+
+    public void setEvent(Event currEvent) {
+        this.currentEvent = gson.toJson(currEvent);
+        user.setActiveEvent(currEvent.getId());
+        event = currEvent;
+    }
 }

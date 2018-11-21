@@ -27,6 +27,7 @@ public class PhotoScreenActivity extends AppCompatActivity {
         String json = intent.getStringExtra("imageObject");
         EventImage eventImage = new Gson().fromJson(json, EventImage.class);
 
+
         final PhotoScreenVm photoScreenVm = new PhotoScreenVm(eventImage); //ViewModelProviders.of(this).get(PhotoScreenVm.class);
 
         final ActivityPhotoScreenBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_photo_screen);

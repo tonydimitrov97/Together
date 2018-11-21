@@ -95,20 +95,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/flash_off" />
 
-    <TextView
-        android:id="@+id/currentEventText"
+    <Spinner
+        android:id="@+id/currentEventSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Current Event"
+        android:dropDownSelector="@drawable/empty"
+        android:spinnerMode="dialog"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </android.support.constraint.ConstraintLayout>
