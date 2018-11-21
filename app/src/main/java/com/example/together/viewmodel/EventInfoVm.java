@@ -1,15 +1,12 @@
 package com.example.together.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import com.example.together.R;
 import com.example.together.event.Event;
 import com.example.together.event.EventImage;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EventInfoVm extends ViewModel {
@@ -23,6 +20,8 @@ public class EventInfoVm extends ViewModel {
     private int photoCount;
     private int publicEvent;
     private int eventId;
+    private String startDate;
+    private String endDate;
 
     public EventInfoVm(Event event) {
         this.userCount = 1;
@@ -33,6 +32,8 @@ public class EventInfoVm extends ViewModel {
         this.eventGallery = new ArrayList<EventImage>();
         this.publicEvent = event.getPublic();
         this.eventId = event.getId();
+        this.startDate = event.getStart_date();
+        this.endDate = event.getEnd_date();
     }
 
     public boolean getPublicEvent() {
@@ -81,5 +82,24 @@ public class EventInfoVm extends ViewModel {
 
     public int getPhotoCount() {
         return photoCount;
+    }
+
+    public String getDates() {
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(this.startDate);
+            Date newStartDate = format.parse(this.startDate);
+            Date newEndDate = format.parse(this.endDate);
+            format = new SimpleDateFormat("MM/dd/yyyy");
+            String newStartDate1 = format.format(newStartDate);
+            String newEndDate1 = format.format(newEndDate);
+
+            return newStartDate1 + "   -   " + newEndDate1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

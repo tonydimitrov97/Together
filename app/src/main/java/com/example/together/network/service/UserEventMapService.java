@@ -1,6 +1,5 @@
 package com.example.together.network.service;
 
-import com.example.together.network.response.EventResponse;
 import com.example.together.network.response.UserEventMapResponse;
 import io.reactivex.Single;
 import retrofit2.http.Field;
