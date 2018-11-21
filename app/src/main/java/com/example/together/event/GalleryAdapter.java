@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.example.together.PhotoScreenActivity;
 import com.example.together.R;
 import com.example.together.configuration.Configuration;
 import com.example.together.user.User;
-import com.example.together.util.IntegerOnClickListener;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -52,9 +50,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         this.imageLoader.displayImage(Configuration.SERVER_IP + "images/" + galleryList.get(i).getPath(), viewHolder.img);
 
         /* Make it so clicking a photo goes to photo view */
-        viewHolder.img.setOnClickListener(new IntegerOnClickListener(i) {
+        final int index = i;
+        viewHolder.img.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int index = this.getIndex();
                 Intent putIntent = new Intent(context, PhotoScreenActivity.class);
                 putIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String imageJson = gson.toJson(galleryList.get(index));

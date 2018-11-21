@@ -1,23 +1,18 @@
 package com.example.together.data;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.together.EventInfoActivity;
 import com.example.together.R;
 import com.example.together.configuration.Configuration;
@@ -26,10 +21,11 @@ import com.example.together.network.ApiClient;
 import com.example.together.network.response.UserEventMapResponse;
 import com.example.together.network.service.UserEventMapService;
 import com.example.together.user.User;
-import com.example.together.util.IntegerOnClickListener;
 import com.google.gson.Gson;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,6 +97,8 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
         String eventId = "Event Id: " + preview.getEventId();
         holder.textViewEventId.setText(eventId);
         if(preview.getThumbnail() != null) {
+            if(!this.imageLoader.isInited())
+                this.imageLoader.init(ImageLoaderConfiguration.createDefault(mCtx));
             this.imageLoader.displayImage(Configuration.SERVER_IP + "images/" + preview.getThumbnail(), holder.imageView);
         } else {
             holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(preview.getImage()));
@@ -140,16 +138,16 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
             // we need to show the "normal" state
             holder.itemView.findViewById(R.id.relativeLayout).setVisibility(View.VISIBLE);
             holder.itemView.findViewById(R.id.myCardView).setBackgroundColor(Color.WHITE);
-            holder.itemView.findViewById(R.id.removeUserWarning).setVisibility(View.GONE);
+            holder.itemView.findViewById(R.id.removeUserWarning).setVisibility(View.INVISIBLE);
             holder.textViewTitle.setVisibility(View.VISIBLE);
             holder.undoButton.setVisibility(View.GONE);
             holder.undoButton.setOnClickListener(null);
         }
 
+        final int index = position;
         /* When an event is clicked, pass the data to the event screen and start the activity */
-        holder.itemView.setOnClickListener(new IntegerOnClickListener(position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int index = this.getIndex();
                 Intent intent = new Intent(mCtx, EventInfoActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String eventJson = gson.toJson(eventList.get(index));

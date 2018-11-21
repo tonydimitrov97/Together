@@ -7,8 +7,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.example.together.network.ApiClient;
+import com.example.together.network.response.EventResponse;
 import com.example.together.network.response.UserEventMapResponse;
+import com.example.together.network.service.EventService;
 import com.example.together.network.service.UserEventMapService;
 import com.example.together.user.User;
 import com.google.gson.Gson;
@@ -23,6 +26,7 @@ public class JoinEventActivity extends AppCompatActivity {
     private User user;
     private Gson gson;
     UserEventMapService mappingService;
+    EventService eventService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +42,43 @@ public class JoinEventActivity extends AppCompatActivity {
         Button joinEventButton = findViewById(R.id.joinEventButton);
 
         mappingService = ApiClient.getClient(getApplicationContext()).create(UserEventMapService.class);
+        eventService = ApiClient.getClient(getApplicationContext()).create(EventService.class);
 
         joinEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventListActivity.eventListActivity.finish();
-                joinEvent();
-                Intent putIntent = new Intent(getApplicationContext(), EventListActivity.class);
-                String json = gson.toJson(user);
-                putIntent.putExtra("userObject", json);
-                startActivity(putIntent);
-                finish();
+                attemptJoinEvent();
             }
         });
-
     }
 
-    private void joinEvent() {
+    public void attemptJoinEvent() {
+        final int eventId = Integer.parseInt(((EditText)findViewById(R.id.eventId)).getText().toString());
+
+        disposable.add(
+                eventService.getEventById(eventId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<EventResponse>() {
+                            @Override
+                            public void onSuccess(EventResponse eventResponse) {
+                                if(eventResponse.getResponse().get(0).getPublic() == 1)
+                                    joinEvent(eventId);
+                                else {
+                                    failToJoinEvent();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println("Error attempting to join event.");
+                            }
+                        })
+        );
+    }
+
+    private void joinEvent(int eventId) {
         int userId = this.user.getId();
-        int eventId = Integer.parseInt(((EditText)findViewById(R.id.eventId)).getText().toString());
 
         disposable.add(
                 mappingService.joinEvent(eventId, userId)
@@ -66,15 +88,36 @@ public class JoinEventActivity extends AppCompatActivity {
 
                             @Override
                             public void onSuccess(UserEventMapResponse eventResponse) {
-                                System.out.println("Created Event");
+                                successfullyJoinEvent();
+                                System.out.println("Joined Event");
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                System.out.println("Error fetching events.");
+                                System.out.println("Error joining event.");
                             }
                         })
         );
+    }
+
+    public void successfullyJoinEvent() {
+        EventListActivity.eventListActivity.finish();
+        Intent putIntent = new Intent(getApplicationContext(), EventListActivity.class);
+        String json = gson.toJson(user);
+        putIntent.putExtra("userObject", json);
+        startActivity(putIntent);
+        finish();
+    }
+
+    public void failToJoinEvent() {
+        final TextView error = ((TextView)findViewById(R.id.joinErrorMessage));
+        error.setText(getResources().getString(R.string.failJoin));
+
+        error.postDelayed(new Runnable() {
+            public void run() {
+                error.setVisibility(View.INVISIBLE);
+            }
+        }, 3000);
     }
 
     @Override

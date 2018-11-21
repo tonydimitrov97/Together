@@ -6,41 +6,57 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <LinearLayout
-        android:layout_width="355dp"
-        android:layout_height="477dp"
-        android:orientation="vertical"
+
+    <EditText
+        android:id="@+id/eventId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#ffffff"
+        android:hint="@string/join_event_hint"
+        android:textColor="#ffffff"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/joinEventButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:style="@style/Theme.App.Base" />
+
+
+    <Button
+        android:id="@+id/joinEventButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#ffffff"
+        android:text="@string/join_event_button"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.44" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:theme="@style/JoinCreateEventTheme"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:backgroundTint="#ffffff">
+    <TextView
+        android:id="@+id/joinErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/delete_red"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/eventId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/eventId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/join_event_hint"
-                android:textColor="#ffffff"
-                android:textColorLink="#FFFFFF"
-                tools:style="@style/Theme.App.Base"
-                android:backgroundTint="#ffffff"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/joinEventButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:text="@string/join_event_button"
-            android:textColor="@color/colorPrimary" />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

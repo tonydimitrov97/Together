@@ -239,53 +239,58 @@ public class MainActivity extends AppCompatActivity {
 
     // Make Http call to upload Image to Php server
     public void uploadPhoto() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        // Don't forget to change the IP address to your LAN address. Port no as well.
-        client.post(Configuration.UPLOAD_IP,
-                params, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        prgDialog.hide();
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        Date date = new Date();
-                        disposable.add(
-                                photoService.uploadPhoto(event.getId(), user.getId(), event.getLocation(), dateFormat.format(date),
-                                "")
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribeWith(new DisposableSingleObserver<PhotoResponse>() {
-                                            @Override
-                                            public void onSuccess(PhotoResponse photoResponse) { }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        disposable.add(
+                photoService.uploadPhoto(event.getId(), user.getId(), event.getLocation(), dateFormat.format(date),
+                        "")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<PhotoResponse>() {
+                            @Override
+                            public void onSuccess(PhotoResponse photoResponse) {
 
+                                int id = photoResponse.getResponse().get(0).getId();
+                                params.put("id", id);
+                                AsyncHttpClient client = new AsyncHttpClient();
+                                // Don't forget to change the IP address to your LAN address. Port no as well.
+                                client.post(Configuration.UPLOAD_IP,
+                                        params, new AsyncHttpResponseHandler() {
                                             @Override
-                                            public void onError(Throwable e) {
+                                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                                prgDialog.hide();
 
                                             }
-                                        })
-                        );
-                        System.out.println("Image Uploaded.");
-                    }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        // Hide Progress Dialog
-                        prgDialog.hide();
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                // Hide Progress Dialog
+                                                prgDialog.hide();
 
-                        if (statusCode == 404) {
-                            System.out.println("Requested resource not found.");
-                        }
-                        // When Http response code is '500'
-                        else if (statusCode == 500) {
-                            System.out.println("Something went wrong at server end.");
-                        }
-                        // When Http response code other than 404, 500
-                        else {
-                            System.out.println("Error Occured n Most Common Error: n1. Device not connected to Internetn2. Web App is not deployed in App servern3. App server is not runningn HTTP Status code : "
-                            + statusCode);
-                        }
-                    }
+                                                if (statusCode == 404) {
+                                                    System.out.println("Requested resource not found.");
+                                                }
+                                                // When Http response code is '500'
+                                                else if (statusCode == 500) {
+                                                    System.out.println("Something went wrong at server end.");
+                                                }
+                                                // When Http response code other than 404, 500
+                                                else {
+                                                    System.out.println("Error Occured n Most Common Error: n1. Device not connected to Internetn2. Web App is not deployed in App servern3. App server is not runningn HTTP Status code : "
+                                                            + statusCode);
+                                                }
+                                            }
 
-                });
+                                        });
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+                        })
+        );
+        System.out.println("Image Uploaded.");
     }
 
     public void setEvent(EventResponse eventResponse) {
