@@ -17,7 +17,7 @@ public interface UserService {
     @GET("api/user/{id}")
     Single<UserResponse> getUserById(@Path("id") int id);
 
-    @GET("api/user/userEvent/{eventId}")
+    @GET("api/user/{eventId}")
     Single<UserResponse> getUsersByEventId(@Path("eventId") int eventId);
 
     @FormUrlEncoded
