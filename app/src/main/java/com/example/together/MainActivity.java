@@ -239,7 +239,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Make Http call to upload Image to Php server
     public void uploadPhoto() {
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         disposable.add(

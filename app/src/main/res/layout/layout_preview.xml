@@ -12,45 +12,71 @@
         android:layout_margin="5dp">
 
         <RelativeLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="match_parent"
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintVertical_bias="0.0">
+
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/imageView"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:padding="4dp"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="3dp" />
+
+            <ImageView
+                android:id="@+id/lockIcon"
+                android:layout_width="29dp"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                app:layout_constraintVertical_bias="0.0">
+                android:layout_alignTop="@+id/imageView"
+                android:layout_alignBottom="@+id/textViewTitle"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toEndOf="@id/textViewTitle"
+                app:srcCompat="@drawable/lock" />
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@id/imageView"
+                android:text="Event Name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@color/defaultTextColor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewShortDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTitle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/imageView"
+                android:text="Event Description"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:id="@+id/eventId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewTitle"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@id/imageView"
+                android:text="Event Id"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@color/defaultTextColor" />
 
 
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:padding="4dp"
-                    app:civ_border_color="@color/colorPrimary"
-                    app:civ_border_width="3dp" />
-
-                <TextView
-                    android:id="@+id/textViewTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:text="Event Name"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@color/defaultTextColor"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewShortDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewTitle"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:text="Event Description"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
-
-            </RelativeLayout>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/undo_button"

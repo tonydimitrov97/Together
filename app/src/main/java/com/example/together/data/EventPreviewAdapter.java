@@ -94,6 +94,8 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
         //binding the data with the viewholder views
         holder.textViewTitle.setText(preview.getEventName());
         holder.textViewShortDesc.setText(preview.getShortDesc());
+        String eventId = "Event Id: " + preview.getEventId();
+        holder.textViewEventId.setText(eventId);
         if(preview.getThumbnail() != null) {
             if(!this.imageLoader.isInited())
                 this.imageLoader.init(ImageLoaderConfiguration.createDefault(mCtx));
@@ -104,6 +106,9 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
 
         if(preview.getEventId() == user.getActiveEvent()) {
             ((CircularImageView)holder.imageView).setBorderColor(mCtx.getResources().getColor(R.color.current_event));
+        }
+        if(preview.get_public() == 1) {
+            holder.lockIconView.setImageResource(R.drawable.unlock);
         }
 
         if (itemsPendingRemoval.contains(preview)) {
@@ -222,8 +227,8 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
 
     class EventPreviewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitle, textViewShortDesc, textViewRating, textViewPrice;
-        ImageView imageView;
+        TextView textViewTitle, textViewShortDesc, textViewEventId;
+        ImageView imageView, lockIconView;
         Button undoButton;
 
         public EventPreviewHolder(View itemView) {
@@ -232,7 +237,9 @@ public class EventPreviewAdapter extends RecyclerView.Adapter<EventPreviewAdapte
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewShortDesc = itemView.findViewById(R.id.textViewShortDesc);
             imageView = itemView.findViewById(R.id.imageView);
-            undoButton = (Button) itemView.findViewById(R.id.undo_button);
+            undoButton = itemView.findViewById(R.id.undo_button);
+            lockIconView = itemView.findViewById(R.id.lockIcon);
+            textViewEventId = itemView.findViewById(R.id.eventId);
         }
     }
 }

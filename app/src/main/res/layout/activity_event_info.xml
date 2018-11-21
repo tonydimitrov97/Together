@@ -43,9 +43,9 @@
             android:id="@+id/eventTitleHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@{evm.eventTitle}"
             android:textColor="@android:color/black"
             android:textSize="24sp"
@@ -53,30 +53,30 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/dateRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="@{evm.dates}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventTitleHeading" />
+            app:layout_constraintTop_toBottomOf="@+id/eventId" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/info_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
             android:text="@{evm.eventDescription}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateRange" />
 
@@ -90,7 +90,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3">
+            app:layout_constraintTop_toBottomOf="@+id/info_description">
 
             <LinearLayout
                 android:id="@+id/peopleLayout"
@@ -198,6 +198,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/lockIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/eventTitleHeading"
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+            android:src="@{evm.publicEvent ? @drawable/unlock : @drawable/lock}" />
+
+        <TextView
+            android:id="@+id/eventId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@{evm.eventId}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventTitleHeading" />
 
 
     </android.support.constraint.ConstraintLayout>
