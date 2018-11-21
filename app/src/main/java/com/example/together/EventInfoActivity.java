@@ -120,11 +120,13 @@ public class EventInfoActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK) {
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
             finish();
         }
-        return true;
+        return super.onKeyDown(keyCode, event);
     }
 
     private void getImages(int eventId) {

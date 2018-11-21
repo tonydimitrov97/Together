@@ -13,6 +13,7 @@ public class PhotoScreenVm extends ViewModel {
     private int numComments;
     private String caption;
     private boolean liked;
+    private int photoTaker;
 
     public PhotoScreenVm(EventImage eventImage) {
         Random random = new Random();
@@ -21,6 +22,7 @@ public class PhotoScreenVm extends ViewModel {
         this.numLikes = eventImage.getLikes();
         this.caption = eventImage.getCaption();
         this.liked = false;
+        this.photoTaker = eventImage.getUserId();
     }
 
    public int getNumLikes() {
