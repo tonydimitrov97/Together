@@ -1,7 +1,11 @@
 package com.example.together.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 
+import com.example.together.R;
 import com.example.together.event.Event;
 import com.example.together.event.EventImage;
 
@@ -17,6 +21,8 @@ public class EventInfoVm extends ViewModel {
     private int userCount;
     private List<EventImage> eventGallery;
     private int photoCount;
+    private int publicEvent;
+    private int eventId;
 
     public EventInfoVm(Event event) {
         this.userCount = 1;
@@ -25,6 +31,16 @@ public class EventInfoVm extends ViewModel {
         this.eventDescription = event.getDescription();
         this.eventLocation = event.getLocation();
         this.eventGallery = new ArrayList<EventImage>();
+        this.publicEvent = event.getPublic();
+        this.eventId = event.getId();
+    }
+
+    public boolean getPublicEvent() {
+        return (publicEvent == 1);
+    }
+
+    public String getEventId() {
+        return "Event ID: " + eventId;
     }
 
     public void setUserCount(int userCount) {
