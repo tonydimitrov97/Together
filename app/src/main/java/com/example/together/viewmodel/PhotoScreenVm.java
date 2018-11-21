@@ -13,6 +13,7 @@ public class PhotoScreenVm extends ViewModel {
     private int numComments;
     private String caption;
     private boolean liked;
+    private String creator_name;
 
     public PhotoScreenVm(EventImage eventImage) {
         Random random = new Random();
@@ -35,11 +36,17 @@ public class PhotoScreenVm extends ViewModel {
         return this.liked;
     }
 
-   public String getCaption() {
+    public void setCreator_name(String creator_name) {
+        this.creator_name = creator_name;
+    }
+
+    public String getCreator_name() { return this.creator_name; }
+
+    public String getCaption() {
         return this.caption;
    }
 
-   public int getNumComments() {
+    public int getNumComments() {
         return this.numComments;
    }
 
